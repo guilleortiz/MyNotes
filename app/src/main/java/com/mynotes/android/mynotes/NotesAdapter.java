@@ -22,12 +22,14 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
     public class  ViewHolder extends RecyclerView.ViewHolder {
 
         TextView notesTitle;
+        TextView notesDate;
 
 
 
         public ViewHolder(View itemView) {
             super(itemView);
             notesTitle=(TextView) itemView.findViewById(R.id.itemTitle);
+            notesDate=(TextView) itemView.findViewById(R.id.itemDate);
         }
 
     }
@@ -56,16 +58,18 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
 
         int idIndex =mcursor.getColumnIndex(NotesContract._ID);//we get the id to future swipe delete
         int noteTitleIndex=mcursor.getColumnIndex(NotesContract.COLUMN_TITLE);
-        //int noteIndex=mcursor.getColumnIndex(NotesContract.COLUMN_NOTE);
+        int noteDateIndex=mcursor.getColumnIndex(NotesContract.COLUMN_DATE);
 
         mcursor.moveToPosition(position);
 
         final int id =mcursor.getInt(idIndex);
         String noteTitle=mcursor.getString(noteTitleIndex);
+        String noteDate=mcursor.getString(noteDateIndex);
 
         //set values
         holder.itemView.setTag(id);
         holder.notesTitle.setText(noteTitle);
+        holder.notesDate.setText(noteDate);
 
 
 

@@ -24,21 +24,27 @@ public class DataUtils {
         ContentValues cv= new ContentValues();
         cv.put(NotesContract.COLUMN_TITLE,"Primer titulo");
         cv.put(NotesContract.COLUMN_NOTE,"Primera nota");
+        cv.put(NotesContract.COLUMN_DATE,"10/06/2017");
         list.add(cv);
 
          cv= new ContentValues();
         cv.put(NotesContract.COLUMN_TITLE,"segundo titulo");
         cv.put(NotesContract.COLUMN_NOTE,"segundo nota");
+        cv.put(NotesContract.COLUMN_DATE,"12/06/2017");
         list.add(cv);
 
          cv= new ContentValues();
         cv.put(NotesContract.COLUMN_TITLE,"tercero titulo");
         cv.put(NotesContract.COLUMN_NOTE,"tercero nota");
+
+        cv.put(NotesContract.COLUMN_DATE,"9/06/2017");
         list.add(cv);
 
          cv= new ContentValues();
         cv.put(NotesContract.COLUMN_TITLE,"cuarto titulo");
         cv.put(NotesContract.COLUMN_NOTE,"cuarto nota");
+
+        cv.put(NotesContract.COLUMN_DATE,"10/25/1995");
         list.add(cv);
 
 
