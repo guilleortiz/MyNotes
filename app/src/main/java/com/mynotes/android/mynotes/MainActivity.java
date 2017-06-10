@@ -1,15 +1,21 @@
 package com.mynotes.android.mynotes;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+
+import com.mynotes.android.mynotes.data.DataUtils;
+import com.mynotes.android.mynotes.data.NotesDbHelper;
 
 public class MainActivity extends AppCompatActivity {
+
+    private SQLiteDatabase mDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +32,22 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        NotesDbHelper dbHelper=new NotesDbHelper(this);//create db
+
+        mDb=dbHelper.getWritableDatabase();
+        DataUtils.insertFakeData(mDb);
+
+
+
+
     }
+
+
+
+
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
