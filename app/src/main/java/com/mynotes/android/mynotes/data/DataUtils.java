@@ -23,11 +23,26 @@ public class DataUtils {
 
         ContentValues cv= new ContentValues();
         cv.put(NotesContract.COLUMN_TITLE,"Primer titulo");
-        cv.put(NotesContract.COLUMN_NOTE,"Primera nota con cosas");
+        cv.put(NotesContract.COLUMN_NOTE,"Primera nota");
+        list.add(cv);
+
+         cv= new ContentValues();
+        cv.put(NotesContract.COLUMN_TITLE,"segundo titulo");
+        cv.put(NotesContract.COLUMN_NOTE,"segundo nota");
+        list.add(cv);
+
+         cv= new ContentValues();
+        cv.put(NotesContract.COLUMN_TITLE,"tercero titulo");
+        cv.put(NotesContract.COLUMN_NOTE,"tercero nota");
+        list.add(cv);
+
+         cv= new ContentValues();
+        cv.put(NotesContract.COLUMN_TITLE,"cuarto titulo");
+        cv.put(NotesContract.COLUMN_NOTE,"cuarto nota");
         list.add(cv);
 
 
-        db.delete(NotesContract.TABLE_NAME,null,null);
+        //db.delete(NotesContract.TABLE_NAME,null,null);
 
         //insert all guests in one transaction
         try

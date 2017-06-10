@@ -11,7 +11,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class NotesDbHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME="mynotes.db";
-    private static final int DATABASE_VERSION=1;
+    private static final int DATABASE_VERSION=2;
 
     public NotesDbHelper(Context context) {
         super(context,DATABASE_NAME,null,DATABASE_VERSION);
@@ -20,12 +20,15 @@ public class NotesDbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
 
-        final String SQL_CREATE_MYNOTES_TABLE="CREATE TABLE " + NotesContract.TABLE_NAME+
-                " ("+NotesContract._ID +"INTEGER PRIMARY KEY, "+
-                NotesContract.COLUMN_TITLE +"TEXT, "+
-                NotesContract.COLUMN_NOTE +"TEXT);";
 
-        sqLiteDatabase.execSQL(SQL_CREATE_MYNOTES_TABLE);
+
+        final String CREATE_TABLE = "CREATE TABLE "  + NotesContract.TABLE_NAME + " (" +
+                NotesContract._ID               + " INTEGER PRIMARY KEY, " +
+                NotesContract.COLUMN_TITLE + " TEXT , " +
+                NotesContract.COLUMN_NOTE    + " TEXT);";
+
+
+        sqLiteDatabase.execSQL(CREATE_TABLE);
 
 
 

@@ -8,9 +8,9 @@ import android.provider.BaseColumns;
 
 public class NotesContract implements BaseColumns {
 
-    public static  final String   TABLE_NAME="mynotes";
-    public static final String COLUMN_TITLE="noteTitle";
-    public static final String COLUMN_NOTE="note";
+    public static  final String   TABLE_NAME="myNotes";
+    public static final String COLUMN_TITLE="Title";
+    public static final String COLUMN_NOTE="Note";
 
 
 
