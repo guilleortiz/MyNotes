@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -24,6 +25,10 @@ public class NoteActivity extends AppCompatActivity {
 
     private SQLiteDatabase mDb;
 
+    static final String NOTE_STATE="noteEstate";
+    static  final String TITLE_STATE="titleState";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +37,16 @@ public class NoteActivity extends AppCompatActivity {
 
         Mnote=(EditText)findViewById(R.id.Note);
         MtitleNOte=(EditText)findViewById(R.id.NoteTt);
+
+
+
+        if(savedInstanceState!=null){
+
+           // MtitleNOte.setText(savedInstanceState.getString(TITLE_STATE));
+            //Mnote.setText(savedInstanceState.getString(NOTE_STATE));
+        }
+
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.floatingSaveActionButton);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -82,5 +97,15 @@ public class NoteActivity extends AppCompatActivity {
 
 
 
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+
+       outState.putString(NOTE_STATE,Mnote.getText().toString());
+
+        outState.putString(TITLE_STATE,MtitleNOte.getText().toString());
+
+        super.onSaveInstanceState(outState, outPersistentState);
     }
 }
