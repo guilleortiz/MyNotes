@@ -55,7 +55,8 @@ public class DataUtils {
         {
             db.beginTransaction();
             //clear the table first
-            db.delete (NotesContract.TABLE_NAME,null,null);
+            //// TODO: delete commented 11/06/2017
+           // db.delete (NotesContract.TABLE_NAME,null,null);
             //go through the list and add one by one
             for(ContentValues c:list){
                 db.insert(NotesContract.TABLE_NAME, null, c);

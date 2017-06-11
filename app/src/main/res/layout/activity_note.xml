@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_note"
     android:layout_width="match_parent"
@@ -9,28 +10,69 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
-    tools:context="com.mynotes.android.mynotes.NoteActivity">
+    tools:context="com.mynotes.android.mynotes.NoteActivity"
+    app:layout_collapseParallaxMultiplier="0.7">
 
-    <TextView
+    <EditText
         android:id="@+id/NoteTt"
+        android:hint="Titulo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Titulo"
+
         android:textSize="20dp"
         android:gravity="center"
+
         android:padding="8dp"
-        />
+        android:textStyle="normal|bold" />
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@android:color/darker_gray" />
 
-    <TextView
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <EditText
         android:id="@+id/Note"
+        android:inputType="none"
+        android:lines="20"
+        android:backgroundTint="@color/posit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Toda la nota con sus cosas"
-        android:padding="8dp" />
+
+        android:padding="8dp"
+        android:hint="Añade tu nota"
+        android:gravity="start"
+        android:background="@color/posit"
+        android:selectAllOnFocus="false"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
+
+
+
+
+
+    </EditText>
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            app:fabSize="normal"
+
+            app:srcCompat="@android:drawable/ic_menu_save"
+            android:id="@+id/floatingSaveActionButton"
+            app:elevation="9dp"
+            app:backgroundTint="?attr/colorPrimaryDark"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+    </RelativeLayout>
+
+
 
 
 </LinearLayout>
