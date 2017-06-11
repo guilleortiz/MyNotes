@@ -13,18 +13,21 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.mynotes.android.mynotes.data.DataUtils;
 import com.mynotes.android.mynotes.data.NotesContract;
 import com.mynotes.android.mynotes.data.NotesDbHelper;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NotesAdapter.NoteItemClickListener {
 
     private SQLiteDatabase mDb;
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+
+    private NotesAdapter.NoteItemClickListener mOnClickListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
 
         Cursor cursor=getAll();
 
-        mAdapter=new NotesAdapter(this,cursor);
+        mAdapter=new NotesAdapter(this,cursor, this);//mOnClickListener?? TODO 1 //
         mRecyclerView.setAdapter(mAdapter);
 
 
@@ -69,7 +72,9 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-    // no such table: myNtes (code 1): , while compiling: SELECT * FROM myNtes ORDER BY Title
+
+
+
     private Cursor getAll() {
 
         Cursor cursor=mDb.query(
@@ -117,5 +122,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override//This callback is invoked when you click on an item in the list.
+
+    public void onNoteitemClick(int id) {
+        Toast.makeText(this, id, Toast.LENGTH_LONG).show();
+
+        Toast.makeText(this, "aaaaaaaaaaaaaaa", Toast.LENGTH_SHORT).show();
     }
 }
