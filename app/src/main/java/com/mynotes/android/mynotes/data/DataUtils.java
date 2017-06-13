@@ -24,18 +24,21 @@ public class DataUtils {
         ContentValues cv= new ContentValues();
         cv.put(NotesContract.COLUMN_TITLE,"Primer titulo");
         cv.put(NotesContract.COLUMN_NOTE,"Primera nota");
+        cv.put(NotesContract.COLUMN_DATA_TYPE,"5");
         cv.put(NotesContract.COLUMN_DATE,"10/06/2017");
         list.add(cv);
 
          cv= new ContentValues();
         cv.put(NotesContract.COLUMN_TITLE,"segundo titulo");
         cv.put(NotesContract.COLUMN_NOTE,"segundo nota");
+        cv.put(NotesContract.COLUMN_DATA_TYPE,"8");
         cv.put(NotesContract.COLUMN_DATE,"12/06/2017");
         list.add(cv);
 
          cv= new ContentValues();
         cv.put(NotesContract.COLUMN_TITLE,"tercero titulo");
         cv.put(NotesContract.COLUMN_NOTE,"tercero nota");
+        cv.put(NotesContract.COLUMN_DATA_TYPE,"4");
 
         cv.put(NotesContract.COLUMN_DATE,"9/06/2017");
         list.add(cv);
@@ -43,6 +46,7 @@ public class DataUtils {
          cv= new ContentValues();
         cv.put(NotesContract.COLUMN_TITLE,"cuarto titulo");
         cv.put(NotesContract.COLUMN_NOTE,"cuarto nota");
+        cv.put(NotesContract.COLUMN_DATA_TYPE,"2");
 
         cv.put(NotesContract.COLUMN_DATE,"10/25/1995");
         list.add(cv);

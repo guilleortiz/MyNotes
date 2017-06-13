@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+
 import com.mynotes.android.mynotes.data.DataUtils;
 import com.mynotes.android.mynotes.data.NotesContract;
 import com.mynotes.android.mynotes.data.NotesDbHelper;
@@ -34,6 +35,8 @@ public class MainActivity extends AppCompatActivity implements NotesAdapter.Note
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -75,6 +78,9 @@ public class MainActivity extends AppCompatActivity implements NotesAdapter.Note
 
         mAdapter=new NotesAdapter(this,cursor, this);//mOnClickListener?? TODO 1 //
         mRecyclerView.setAdapter(mAdapter);
+
+
+
 
 
 
@@ -141,5 +147,11 @@ public class MainActivity extends AppCompatActivity implements NotesAdapter.Note
         Toast.makeText(this, id, Toast.LENGTH_LONG).show();
 
         Toast.makeText(this, "aaaaaaaaaaaaaaa", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onResume() {
+
+        super.onResume();
     }
 }

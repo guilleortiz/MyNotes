@@ -19,9 +19,15 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class NoteActivity extends AppCompatActivity {
-    EditText Mnote;
-    EditText MtitleNOte;
+
+    @BindView(R.id.Note) EditText Mnote;
+    @BindView(R.id.NoteTt) EditText MtitleNOte;
+
+
 
     private SQLiteDatabase mDb;
 
@@ -33,10 +39,12 @@ public class NoteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note);
-        //TODO 2 implement buterknife
 
-        Mnote=(EditText)findViewById(R.id.Note);
-        MtitleNOte=(EditText)findViewById(R.id.NoteTt);
+        //TODO 2 implement buterknife
+        ButterKnife.bind(this);
+
+        //Mnote=(EditText)findViewById(R.id.Note);
+        //MtitleNOte=(EditText)findViewById(R.id.NoteTt);
 
 
 
@@ -89,6 +97,8 @@ public class NoteActivity extends AppCompatActivity {
                 finally
                 {
                     mDb.endTransaction();
+
+                    finish();
                 }
 
 

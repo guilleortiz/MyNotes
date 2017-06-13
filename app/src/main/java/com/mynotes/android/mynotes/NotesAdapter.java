@@ -31,12 +31,14 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
 
         TextView notesTitle;
         TextView notesDate;
+        TextView notesDataType;
 
 
 
         public ViewHolder(View itemView) {
             super(itemView);
             notesTitle=(TextView) itemView.findViewById(R.id.itemTitle);
+            notesDataType=(TextView) itemView.findViewById(R.id.itemDataType);
             notesDate=(TextView) itemView.findViewById(R.id.itemDate);
         }
 
@@ -75,16 +77,20 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
         int idIndex =mcursor.getColumnIndex(NotesContract._ID);//we get the id to future swipe delete
         int noteTitleIndex=mcursor.getColumnIndex(NotesContract.COLUMN_TITLE);
         int noteDateIndex=mcursor.getColumnIndex(NotesContract.COLUMN_DATE);
+        int noteDataTypeIndex=mcursor.getColumnIndex(NotesContract.COLUMN_DATA_TYPE);
 
         mcursor.moveToPosition(position);
 
         final int id =mcursor.getInt(idIndex);
         String noteTitle=mcursor.getString(noteTitleIndex);
+        String noteDataType=mcursor.getString(noteDataTypeIndex);
         String noteDate=mcursor.getString(noteDateIndex);
+
 
         //set values
         holder.itemView.setTag(id);
         holder.notesTitle.setText(noteTitle);
+        holder.notesDataType.setText(noteDataType);
         holder.notesDate.setText(noteDate);
 
 
@@ -101,5 +107,29 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
         }
         return  mcursor.getCount();
     }
+
+
+
+    /**
+     * When data changes and a re-query occurs, this function swaps the old Cursor
+     * with a newly updated Cursor (Cursor c) that is passed in.
+     */
+    public Cursor swapCursor(Cursor c) {
+        // check if this cursor is the same as the previous cursor (mCursor)
+        if (mcursor == c) {
+            return null; // bc nothing has changed
+        }
+        Cursor temp = mcursor;
+        this.mcursor = c; // new cursor value assigned
+
+        //check if this is a valid cursor, then update the cursor
+        if (c != null) {
+            this.notifyDataSetChanged();
+        }
+        return temp;
+    }
+
+
+
 
 }
