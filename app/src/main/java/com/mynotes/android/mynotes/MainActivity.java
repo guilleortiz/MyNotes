@@ -16,12 +16,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-
 import com.mynotes.android.mynotes.data.DataUtils;
 import com.mynotes.android.mynotes.data.NotesContract;
 import com.mynotes.android.mynotes.data.NotesDbHelper;
 
-public class MainActivity extends AppCompatActivity implements NotesAdapter.NoteItemClickListener {
+public class MainActivity extends AppCompatActivity
+        implements NotesAdapter.NoteItemClickListener {
 
     private SQLiteDatabase mDb;
 
@@ -38,7 +38,8 @@ public class MainActivity extends AppCompatActivity implements NotesAdapter.Note
 
 
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+       Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -114,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements NotesAdapter.Note
                 null,
                 null,
                 null,
-                NotesContract.COLUMN_TITLE
+                NotesContract.COLUMN_DATE
         );
     }
 
@@ -135,23 +136,29 @@ public class MainActivity extends AppCompatActivity implements NotesAdapter.Note
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            mDb.delete (NotesContract.TABLE_NAME,null,null);
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    @Override//This callback is invoked when you click on an item in the list.
-
-    public void onNoteitemClick(int id) {
-        Toast.makeText(this, id, Toast.LENGTH_LONG).show();
-
-        Toast.makeText(this, "aaaaaaaaaaaaaaa", Toast.LENGTH_SHORT).show();
-    }
 
     @Override
     protected void onResume() {
 
         super.onResume();
+    }
+
+    @Override
+    public void onNoteitemClick(int index) {//This callback is invoked when you click on an item in the list.
+
+        Toast.makeText(this,  String.valueOf(index), Toast.LENGTH_SHORT).show();
+
+
+
+
+
+
     }
 }

@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.mynotes.android.mynotes.data.NotesContract;
 
@@ -23,11 +22,12 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
     final private NoteItemClickListener mOnClickListener;
 
     public interface NoteItemClickListener{
-        void onNoteitemClick(int id);
+        void onNoteitemClick(int index);
 
     }
 
-    public class  ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class  ViewHolder extends RecyclerView.ViewHolder
+            implements View.OnClickListener {
 
         TextView notesTitle;
         TextView notesDate;
@@ -40,24 +40,26 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
             notesTitle=(TextView) itemView.findViewById(R.id.itemTitle);
             notesDataType=(TextView) itemView.findViewById(R.id.itemDataType);
             notesDate=(TextView) itemView.findViewById(R.id.itemDate);
+
+            itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
             int clickedPosition=getAdapterPosition();
             mOnClickListener.onNoteitemClick(clickedPosition);
-            Toast.makeText(mcontext, "from adaptes", Toast.LENGTH_SHORT).show();
+
 
         }
     }
 
 
-    public NotesAdapter(Context mContext, Cursor cursor, NoteItemClickListener mOnClickListener) {
+    public NotesAdapter(Context mContext, Cursor cursor, NoteItemClickListener listener) {
 
-        this.mcontext=mContext;
-        this.mcursor=cursor;
+        mcontext=mContext;
+        mcursor=cursor;
         //super(mcontext);
-        this.mOnClickListener = mOnClickListener;
+        mOnClickListener = listener;
     }
 
 
