@@ -21,6 +21,74 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
 
     final private NoteItemClickListener mOnClickListener;
 
+
+
+    public NotesAdapter(Context mContext, Cursor cursor, NoteItemClickListener listener) {
+
+        mcontext=mContext;
+        mcursor=cursor;
+        //super(mcontext);
+        mOnClickListener = listener;
+    }
+
+    public Cursor swapCursor (Cursor c) {
+        // check if this cursor is the same as the previous cursor (mCursor)
+        /*if (mcursor == c) {
+            return null; // bc nothing has changed
+        }
+        */
+        Cursor temp = mcursor;
+        mcursor = c; // new cursor value assigned
+
+        //check if this is a valid cursor, then update the cursor
+        if (c != null) {
+            notifyDataSetChanged();
+        }
+        return temp;
+    }
+
+
+
+    @Override//holds the view for each note
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+        View view= LayoutInflater.from(mcontext)
+                .inflate(R.layout.note_item,parent,false);
+
+
+        return  new ViewHolder(view);
+    }
+
+
+
+    @Override//replace with data orm dataset
+    public void onBindViewHolder(ViewHolder holder, int position) {
+
+        int idIndex =mcursor.getColumnIndex(NotesContract._ID);//we get the id to future swipe delete
+        int noteTitleIndex=mcursor.getColumnIndex(NotesContract.COLUMN_TITLE);
+        int noteDateIndex=mcursor.getColumnIndex(NotesContract.COLUMN_DATE);
+        int noteDataTypeIndex=mcursor.getColumnIndex(NotesContract.COLUMN_DATA_TYPE);
+
+        mcursor.moveToPosition(position);
+
+        final int id =mcursor.getInt(idIndex);
+        String noteTitle=mcursor.getString(noteTitleIndex);
+        String noteDataType=mcursor.getString(noteDataTypeIndex);
+        String noteDate=mcursor.getString(noteDateIndex);
+
+
+        //set values
+        holder.itemView.setTag(id);
+        holder.notesTitle.setText(noteTitle);
+        holder.notesDataType.setText(noteDataType);
+        holder.notesDate.setText(noteDate);
+
+
+
+
+
+    }
+
     public interface NoteItemClickListener{
         void onNoteitemClick(int index);
 
@@ -54,52 +122,17 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
     }
 
 
-    public NotesAdapter(Context mContext, Cursor cursor, NoteItemClickListener listener) {
-
-        mcontext=mContext;
-        mcursor=cursor;
-        //super(mcontext);
-        mOnClickListener = listener;
-    }
 
 
-    @Override//holds the view for each note
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
-        View view= LayoutInflater.from(mcontext)
-                .inflate(R.layout.note_item,parent,false);
-
-
-        return  new ViewHolder(view);
-    }
-
-    @Override//replace with data orm dataset
-    public void onBindViewHolder(ViewHolder holder, int position) {
-
-        int idIndex =mcursor.getColumnIndex(NotesContract._ID);//we get the id to future swipe delete
-        int noteTitleIndex=mcursor.getColumnIndex(NotesContract.COLUMN_TITLE);
-        int noteDateIndex=mcursor.getColumnIndex(NotesContract.COLUMN_DATE);
-        int noteDataTypeIndex=mcursor.getColumnIndex(NotesContract.COLUMN_DATA_TYPE);
-
-        mcursor.moveToPosition(position);
-
-        final int id =mcursor.getInt(idIndex);
-        String noteTitle=mcursor.getString(noteTitleIndex);
-        String noteDataType=mcursor.getString(noteDataTypeIndex);
-        String noteDate=mcursor.getString(noteDateIndex);
-
-
-        //set values
-        holder.itemView.setTag(id);
-        holder.notesTitle.setText(noteTitle);
-        holder.notesDataType.setText(noteDataType);
-        holder.notesDate.setText(noteDate);
+    /**
+     * When data changes and a re-query occurs, this function swaps the old Cursor
+     * with a newly updated Cursor (Cursor c) that is passed in.
+     */
 
 
 
 
 
-    }
 
     @Override
     public int getItemCount() {
@@ -112,24 +145,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
 
 
 
-    /**
-     * When data changes and a re-query occurs, this function swaps the old Cursor
-     * with a newly updated Cursor (Cursor c) that is passed in.
-     */
-    public Cursor swapCursor(Cursor c) {
-        // check if this cursor is the same as the previous cursor (mCursor)
-        if (mcursor == c) {
-            return null; // bc nothing has changed
-        }
-        Cursor temp = mcursor;
-        this.mcursor = c; // new cursor value assigned
 
-        //check if this is a valid cursor, then update the cursor
-        if (c != null) {
-            this.notifyDataSetChanged();
-        }
-        return temp;
-    }
 
 
 

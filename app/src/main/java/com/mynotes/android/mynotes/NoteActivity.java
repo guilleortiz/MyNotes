@@ -1,8 +1,10 @@
 package com.mynotes.android.mynotes;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.design.widget.FloatingActionButton;
@@ -37,6 +39,12 @@ public class NoteActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
+        Intent intent = getIntent();
+        String action = intent.getAction();
+        String type = intent.getType();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note);
 
@@ -53,6 +61,26 @@ public class NoteActivity extends AppCompatActivity {
            // MtitleNOte.setText(savedInstanceState.getString(TITLE_STATE));
             //Mnote.setText(savedInstanceState.getString(NOTE_STATE));
         }
+
+
+
+
+        if (Intent.ACTION_SEND.equals(action) && type != null) {
+            if ("text/plain".equals(type)) {
+                handleSendText(intent); // Handle text being sent
+            } else if (type.startsWith("image/")) {
+                handleSendImage(intent); // Handle single image being sent
+            }
+        } else if (Intent.ACTION_SEND_MULTIPLE.equals(action) && type != null) {
+            if (type.startsWith("image/")) {
+                handleSendMultipleImages(intent); // Handle multiple images being sent
+            }
+        } else {
+            // Handle other intents, such as being started from the home screen
+        }
+
+
+
 
 
 
@@ -98,6 +126,8 @@ public class NoteActivity extends AppCompatActivity {
                 {
                     mDb.endTransaction();
 
+
+
                     finish();
                 }
 
@@ -107,6 +137,27 @@ public class NoteActivity extends AppCompatActivity {
 
 
 
+    }
+
+    void handleSendText(Intent intent) {
+        String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
+        if (sharedText != null) {
+            Mnote.setText(sharedText);
+        }
+    }
+
+    void handleSendImage(Intent intent) {
+        Uri imageUri = (Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM);
+        if (imageUri != null) {
+            // Update UI to reflect image being shared
+        }
+    }
+
+    void handleSendMultipleImages(Intent intent) {
+        ArrayList<Uri> imageUris = intent.getParcelableArrayListExtra(Intent.EXTRA_STREAM);
+        if (imageUris != null) {
+            // Update UI to reflect multiple images being shared
+        }
     }
 
     @Override

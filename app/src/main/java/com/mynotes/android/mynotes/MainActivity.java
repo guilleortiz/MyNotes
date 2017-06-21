@@ -3,10 +3,10 @@ package com.mynotes.android.mynotes;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,11 +30,15 @@ public class MainActivity extends AppCompatActivity
     private RecyclerView.LayoutManager mLayoutManager;
 
     private NotesAdapter.NoteItemClickListener mOnClickListener;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+
+
         super.onCreate(savedInstanceState);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
 
 
         setContentView(R.layout.activity_main);
@@ -42,24 +46,6 @@ public class MainActivity extends AppCompatActivity
        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Context context = MainActivity.this;
-                Class destinationActivity = NoteActivity.class;
-
-                Intent startActivityIntent = new Intent(context, destinationActivity);
-
-
-
-
-                startActivity(startActivityIntent);
-
-
-
-            }
-        });
 
         NotesDbHelper dbHelper=new NotesDbHelper(this);//create db
 
@@ -84,6 +70,58 @@ public class MainActivity extends AppCompatActivity
 
 
 
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Context context = MainActivity.this;
+                Class destinationActivity = NoteActivity.class;
+
+                Intent startActivityIntent = new Intent(context, destinationActivity);
+
+
+
+
+                startActivity(startActivityIntent);
+
+
+
+
+            }
+        });
+/*
+
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+
+            void refreshItems() {
+                // Load items
+                // ...
+                mAdapter.notifyDataSetChanged();
+
+                // Load complete
+                onItemsLoadComplete();
+            }
+
+            void onItemsLoadComplete() {
+                // Update the adapter and notify data set changed
+                // ...
+
+                // Stop refresh animation
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+
+            @Override
+            public void onRefresh() {
+                // Refresh items
+                refreshItems();
+                Toast.makeText(MainActivity.this, "refresh", Toast.LENGTH_SHORT).show();
+            }
+        });
+*/
+
+
+
+
 
 
 
@@ -104,7 +142,7 @@ public class MainActivity extends AppCompatActivity
                 null,
                 NotesContract.COLUMN_TITLE);
 
-        DatabaseUtils.dumpCursorToString(cursor);
+       // DatabaseUtils.dumpCursorToString(cursor);
 
 
 
@@ -147,7 +185,19 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onResume() {
 
+
         super.onResume();
+        Toast.makeText(this, "resume", Toast.LENGTH_SHORT).show();
+
+       // mAdapter.swapCursor(getAll());
+
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        mAdapter.notifyDataSetChanged();
+        Toast.makeText(this, "restart", Toast.LENGTH_SHORT).show();
     }
 
     @Override
