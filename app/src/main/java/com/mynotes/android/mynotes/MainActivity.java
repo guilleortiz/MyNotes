@@ -22,6 +22,7 @@ import com.mynotes.android.mynotes.data.NotesDbHelper;
 
 public class MainActivity extends AppCompatActivity
         implements NotesAdapter.NoteItemClickListener {
+    //dev branch
 
     private SQLiteDatabase mDb;
 
