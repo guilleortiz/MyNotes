@@ -41,6 +41,8 @@ public class NoteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
 
+
+
         Intent intent = getIntent();
         String action = intent.getAction();
         String type = intent.getType();
@@ -48,7 +50,7 @@ public class NoteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note);
 
-        //TODO 2 implement buterknife
+
         ButterKnife.bind(this);
 
         //Mnote=(EditText)findViewById(R.id.Note);
@@ -64,6 +66,23 @@ public class NoteActivity extends AppCompatActivity {
 
 
 
+
+        //When activity is cal from other activity
+        if (intent!=null){
+
+            if (intent.hasExtra("noteTitle")){
+                String titleFromExtra=intent.getStringExtra("noteTitle");
+                MtitleNOte.setText(titleFromExtra);
+
+
+
+            }
+
+        }
+
+
+
+        //when app is call using an intentFilter
 
         if (Intent.ACTION_SEND.equals(action) && type != null) {
             if ("text/plain".equals(type)) {

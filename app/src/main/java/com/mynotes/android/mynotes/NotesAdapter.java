@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.mynotes.android.mynotes.data.NotesContract;
 
+import java.util.ArrayList;
+
 /**
  * Created by Guille on 10/06/2017.
  */
@@ -90,7 +92,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
     }
 
     public interface NoteItemClickListener{
-        void onNoteitemClick(int id);
+        void onNoteitemClick(int id,String title);
 
     }
 
@@ -115,7 +117,21 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
         @Override
         public void onClick(View view) {
             int clickedPosition=getAdapterPosition();
-            mOnClickListener.onNoteitemClick(clickedPosition);
+
+
+            //mcursor.moveToPosition(clickedPosition);//returns boolean
+
+            ArrayList<String> mArrayList = new ArrayList<String>();
+
+            mcursor.moveToFirst();
+            while(!mcursor.isAfterLast()) {
+                mArrayList.add(mcursor.getString(mcursor.getColumnIndex(NotesContract.COLUMN_TITLE))); //add the item
+               // mArrayList.add(mcursor.getString(mcursor.getColumnIndex(NotesContract.COLUMN_NOTE)));
+                mcursor.moveToNext();
+            }
+
+
+            mOnClickListener.onNoteitemClick(clickedPosition,mArrayList.get(clickedPosition));
 
 
         }
