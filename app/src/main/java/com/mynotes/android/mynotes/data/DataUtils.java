@@ -15,6 +15,8 @@ public class DataUtils {
 
 
     public  static void insertFakeData(SQLiteDatabase db){
+
+        //byte[] image
         if(db==null) {
             return;
         }
@@ -25,6 +27,7 @@ public class DataUtils {
         cv.put(NotesContract.COLUMN_TITLE,"Primer titulo");
         cv.put(NotesContract.COLUMN_NOTE,"Primera nota");
         cv.put(NotesContract.COLUMN_DATA_TYPE,"5");
+        //cv.put(NotesContract.COLUMN_IMG);
         cv.put(NotesContract.COLUMN_DATE,"10/06/2017");
         list.add(cv);
 

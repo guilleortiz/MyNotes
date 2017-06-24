@@ -80,8 +80,6 @@ public class MainActivity extends AppCompatActivity
                 Intent startActivityIntent = new Intent(context, destinationActivity);
 
 
-
-
                 startActivity(startActivityIntent);
 
 
@@ -202,13 +200,18 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onNoteitemClick(int index) {//This callback is invoked when you click on an item in the list.
-
         Toast.makeText(this,  String.valueOf(index), Toast.LENGTH_SHORT).show();
 
+        //open new notes activity
+        Intent openNote=new Intent(MainActivity.this,NoteActivity.class);
 
+        //openNote.putExtra()
+
+        startActivity(openNote);
 
 
 
 
     }
+
 }

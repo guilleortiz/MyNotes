@@ -90,7 +90,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
     }
 
     public interface NoteItemClickListener{
-        void onNoteitemClick(int index);
+        void onNoteitemClick(int id);
 
     }
 
