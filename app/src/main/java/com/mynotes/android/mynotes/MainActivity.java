@@ -3,7 +3,6 @@ package com.mynotes.android.mynotes;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -15,7 +14,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.mynotes.android.mynotes.data.DataUtils;
 import com.mynotes.android.mynotes.data.NotesContract;
@@ -157,19 +155,7 @@ public class MainActivity extends AppCompatActivity
         );
     }
 
-    private Cursor getData(String column) {
 
-
-        return mDb.query(
-                NotesContract.TABLE_NAME,
-                null,
-                NotesContract.COLUMN_TITLE+" = "+column,
-                null,
-                null,
-                null,
-                NotesContract.COLUMN_DATE
-        );
-    }
 
 
     @Override
@@ -219,23 +205,42 @@ public class MainActivity extends AppCompatActivity
     public void onNoteitemClick(int id, String title) {
 
 
-        Toast.makeText(this, title, Toast.LENGTH_LONG).show();
+       // Toast.makeText(this, title, Toast.LENGTH_LONG).show();
 
         //open new notes activity
         Intent openNote=new Intent(MainActivity.this,NoteActivity.class);
 
-        Cursor c=getData(NotesContract.COLUMN_NOTE);
+        Cursor c=getData(title);
 
-        Toast.makeText(this, DatabaseUtils.dumpCursorToString(c), Toast.LENGTH_SHORT).show();
+        c.moveToFirst();
+        String mNoteTitle= c.getString(c.getColumnIndex(NotesContract.COLUMN_TITLE));
+        String mNote= c.getString(c.getColumnIndex(NotesContract.COLUMN_NOTE));
 
 
-
-
-
-        openNote.putExtra("noteTitle",title);
+        openNote.putExtra("noteTitle",mNoteTitle);
+        openNote.putExtra("noteText",mNote);
 
         startActivity(openNote);
 
 
+    }
+
+    private Cursor getData(String title) {
+        String mtitle=title;
+
+        String [] whereArgs=new String[]{
+                mtitle
+        };
+
+
+        return mDb.query(
+                NotesContract.TABLE_NAME,
+                null,
+                NotesContract.COLUMN_TITLE+" = ? ",
+                whereArgs,
+                null,
+                null,
+                null
+        );
     }
 }

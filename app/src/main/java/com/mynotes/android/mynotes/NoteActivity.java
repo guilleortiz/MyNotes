@@ -71,8 +71,12 @@ public class NoteActivity extends AppCompatActivity {
         if (intent!=null){
 
             if (intent.hasExtra("noteTitle")){
+
                 String titleFromExtra=intent.getStringExtra("noteTitle");
+                String noteTextFromExtra=intent.getStringExtra("noteText");
+
                 MtitleNOte.setText(titleFromExtra);
+                Mnote.setText(noteTextFromExtra);
 
 
 
