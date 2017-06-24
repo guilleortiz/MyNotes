@@ -44,9 +44,11 @@
         android:id="@+id/Note"
         android:inputType="none"
         android:lines="20"
+            android:autoLink="web"
         android:backgroundTint="@color/posit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
 
         android:padding="8dp"
         android:hint="Añade tu nota"
