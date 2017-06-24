@@ -14,7 +14,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.mynotes.android.mynotes.data.DataUtils;
 import com.mynotes.android.mynotes.data.NotesContract;
@@ -22,6 +21,7 @@ import com.mynotes.android.mynotes.data.NotesDbHelper;
 
 public class MainActivity extends AppCompatActivity
         implements NotesAdapter.NoteItemClickListener {
+    //dev branch
 
     private SQLiteDatabase mDb;
 
@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity
 
         Cursor cursor=getAll();
 
-        mAdapter=new NotesAdapter(this,cursor, this);//mOnClickListener?? TODO 1 //
+        mAdapter=new NotesAdapter(this,cursor, this);
         mRecyclerView.setAdapter(mAdapter);
 
 
@@ -78,8 +78,6 @@ public class MainActivity extends AppCompatActivity
                 Class destinationActivity = NoteActivity.class;
 
                 Intent startActivityIntent = new Intent(context, destinationActivity);
-
-
 
 
                 startActivity(startActivityIntent);
@@ -158,6 +156,8 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -167,12 +167,10 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
+
         if (id == R.id.action_settings) {
             mDb.delete (NotesContract.TABLE_NAME,null,null);
             return true;
@@ -187,7 +185,7 @@ public class MainActivity extends AppCompatActivity
 
 
         super.onResume();
-        Toast.makeText(this, "resume", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "resume", Toast.LENGTH_SHORT).show();
 
        // mAdapter.swapCursor(getAll());
 
@@ -197,18 +195,52 @@ public class MainActivity extends AppCompatActivity
     protected void onRestart() {
         super.onRestart();
         mAdapter.notifyDataSetChanged();
-        Toast.makeText(this, "restart", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "restart", Toast.LENGTH_SHORT).show();
     }
 
+
+
+
     @Override
-    public void onNoteitemClick(int index) {//This callback is invoked when you click on an item in the list.
-
-        Toast.makeText(this,  String.valueOf(index), Toast.LENGTH_SHORT).show();
+    public void onNoteitemClick(int id, String title) {
 
 
+       // Toast.makeText(this, title, Toast.LENGTH_LONG).show();
+
+        //open new notes activity
+        Intent openNote=new Intent(MainActivity.this,NoteActivity.class);
+
+        Cursor c=getData(title);
+
+        c.moveToFirst();
+        String mNoteTitle= c.getString(c.getColumnIndex(NotesContract.COLUMN_TITLE));
+        String mNote= c.getString(c.getColumnIndex(NotesContract.COLUMN_NOTE));
 
 
+        openNote.putExtra("noteTitle",mNoteTitle);
+        openNote.putExtra("noteText",mNote);
+
+        startActivity(openNote);
 
 
+    }
+
+    private Cursor getData(String title) {
+        String mtitle=title;
+
+        String [] whereArgs=new String[]{
+                mtitle
+        };
+
+
+        return mDb.query(
+                NotesContract.TABLE_NAME,
+                null,
+                NotesContract.COLUMN_TITLE+" = ? ",
+                whereArgs,
+                null,
+                null,
+                null
+        );
     }
 }

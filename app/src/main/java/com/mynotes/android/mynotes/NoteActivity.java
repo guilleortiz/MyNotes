@@ -9,8 +9,11 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.mynotes.android.mynotes.data.NotesContract;
 import com.mynotes.android.mynotes.data.NotesDbHelper;
@@ -41,6 +44,8 @@ public class NoteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
 
+
+
         Intent intent = getIntent();
         String action = intent.getAction();
         String type = intent.getType();
@@ -48,7 +53,7 @@ public class NoteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note);
 
-        //TODO 2 implement buterknife
+
         ButterKnife.bind(this);
 
         //Mnote=(EditText)findViewById(R.id.Note);
@@ -65,6 +70,27 @@ public class NoteActivity extends AppCompatActivity {
 
 
 
+        //When activity is cal from other activity
+        if (intent!=null){
+
+            if (intent.hasExtra("noteTitle")){
+
+                String titleFromExtra=intent.getStringExtra("noteTitle");
+                String noteTextFromExtra=intent.getStringExtra("noteText");
+
+                MtitleNOte.setText(titleFromExtra);
+                Mnote.setText(noteTextFromExtra);
+
+
+
+            }
+
+        }
+
+
+
+        //when app is call using an intentFilter
+
         if (Intent.ACTION_SEND.equals(action) && type != null) {
             if ("text/plain".equals(type)) {
                 handleSendText(intent); // Handle text being sent
@@ -78,7 +104,6 @@ public class NoteActivity extends AppCompatActivity {
         } else {
             // Handle other intents, such as being started from the home screen
         }
-
 
 
 
@@ -137,6 +162,27 @@ public class NoteActivity extends AppCompatActivity {
 
 
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_note,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id=item.getItemId();
+        if (id==R.id.action_attach){
+
+            Toast.makeText(this, "Attaching img comming soon!", Toast.LENGTH_SHORT).show();
+
+        }
+
+
+
+        return super.onOptionsItemSelected(item);
     }
 
     void handleSendText(Intent intent) {
