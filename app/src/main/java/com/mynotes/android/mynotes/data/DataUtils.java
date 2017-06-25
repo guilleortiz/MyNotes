@@ -16,7 +16,6 @@ public class DataUtils {
 
     public  static void insertFakeData(SQLiteDatabase db){
 
-        //byte[] image
         if(db==null) {
             return;
         }
@@ -81,6 +80,43 @@ public class DataUtils {
 
 
 
+    }
+
+
+
+
+    public static void dbInsert(SQLiteDatabase db,String filepath){
+
+
+
+        List<ContentValues> list= new ArrayList<ContentValues>();
+
+        ContentValues cv= new ContentValues();
+        cv.put(NotesContract.COLUMN_IMG,filepath);
+
+        list.add(cv);
+
+        //insert all guests in one transaction
+        try
+        {
+            db.beginTransaction();
+            //clear the table first
+            // mDb.delete (NotesContract.TABLE_NAME,null,null);
+            //go through the list and add one by one
+            for(ContentValues c:list){
+                db.insert(NotesContract.TABLE_NAME, null, c);
+            }
+            db.setTransactionSuccessful();
+
+        }
+        catch (SQLException e) {
+            //too bad :(
+        }
+        finally
+        {
+            db.endTransaction();
+
+        }
     }
 
 

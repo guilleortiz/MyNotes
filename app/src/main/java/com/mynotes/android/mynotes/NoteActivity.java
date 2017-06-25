@@ -4,9 +4,11 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -38,6 +40,7 @@ public class NoteActivity extends AppCompatActivity {
 
     static final String NOTE_STATE="noteEstate";
     static  final String TITLE_STATE="titleState";
+    private static final int RESULT_LOAD_IMAGE=1;
 
 
     @Override
@@ -176,13 +179,48 @@ public class NoteActivity extends AppCompatActivity {
         int id=item.getItemId();
         if (id==R.id.action_attach){
 
-            Toast.makeText(this, "Attaching img comming soon!", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Attaching img comming soon!", Toast.LENGTH_SHORT).show();
+            activeGallery();
 
         }
 
 
-
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        NotesDbHelper dbHelper=new NotesDbHelper(NoteActivity.this);//create db
+        mDb=dbHelper.getWritableDatabase();
+
+        switch (requestCode){
+            case RESULT_LOAD_IMAGE:
+                if (requestCode == RESULT_LOAD_IMAGE &&
+                        resultCode == RESULT_OK && null != data) {
+                    Uri selectedImage = data.getData();
+                    String[] filePathColumn = {MediaStore.Images.Media.DATA};
+
+                   // DataUtils.dbInsert(mDb,filePathColumn[1]);
+                    Toast.makeText(this, "IMG ok ?", Toast.LENGTH_SHORT).show();
+
+
+
+                }
+
+
+
+
+        }
+
+
+    }
+
+    private void activeGallery() {
+        Intent intent = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, RESULT_LOAD_IMAGE);
     }
 
     void handleSendText(Intent intent) {
@@ -194,8 +232,12 @@ public class NoteActivity extends AppCompatActivity {
 
     void handleSendImage(Intent intent) {
         Uri imageUri = (Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM);
+        Bitmap imgIntent=intent.getParcelableExtra(Intent.EXTRA_STREAM);
+
+       // Bitmap img= BitmapFactory.decodeStream(imageUri);
+
         if (imageUri != null) {
-            // Update UI to reflect image being shared
+            Toast.makeText(this, "Imagen", Toast.LENGTH_SHORT).show();
         }
     }
 
