@@ -213,12 +213,15 @@ public class MainActivity extends AppCompatActivity
         Cursor c=getData(title);
 
         c.moveToFirst();
+        int mNoteId=c.getInt(c.getColumnIndex(NotesContract._ID));
         String mNoteTitle= c.getString(c.getColumnIndex(NotesContract.COLUMN_TITLE));
         String mNote= c.getString(c.getColumnIndex(NotesContract.COLUMN_NOTE));
+        String mImgPath= c.getString(c.getColumnIndex(NotesContract.COLUMN_IMG));
 
-
+        openNote.putExtra("noteid",mNoteId);
         openNote.putExtra("noteTitle",mNoteTitle);
         openNote.putExtra("noteText",mNote);
+        openNote.putExtra("noteImgPath",mImgPath);
 
         startActivity(openNote);
 

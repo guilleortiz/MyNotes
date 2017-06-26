@@ -11,7 +11,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class NotesDbHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME="mynotes.db";
-    private static final int DATABASE_VERSION=7;
+    private static final int DATABASE_VERSION=8;
 
     public NotesDbHelper(Context context) {
         super(context,DATABASE_NAME,null,DATABASE_VERSION);
@@ -27,7 +27,7 @@ public class NotesDbHelper extends SQLiteOpenHelper {
                 NotesContract.COLUMN_TITLE + " TEXT UNIQUE, " +
                 NotesContract.COLUMN_NOTE + " TEXT , " +
                 NotesContract.COLUMN_LINK + " TEXT , " +
-                NotesContract.COLUMN_IMG + " BLOB , " +
+                NotesContract.COLUMN_IMG + " TEXT , " +
                 NotesContract.COLUMN_DATA_TYPE + " TEXT , " +
                 NotesContract.COLUMN_DATE    + " TEXT);";
 

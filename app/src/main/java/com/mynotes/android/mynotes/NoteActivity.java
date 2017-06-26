@@ -1,20 +1,26 @@
 package com.mynotes.android.mynotes;
 
+import android.Manifest;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.mynotes.android.mynotes.data.NotesContract;
@@ -29,10 +35,13 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.mynotes.android.mynotes.data.DataUtils.dbUpdateImg;
+
 public class NoteActivity extends AppCompatActivity {
 
     @BindView(R.id.Note) EditText Mnote;
     @BindView(R.id.NoteTt) EditText MtitleNOte;
+    @BindView(R.id.noteImg)ImageView mNoteImg;
 
 
 
@@ -41,6 +50,7 @@ public class NoteActivity extends AppCompatActivity {
     static final String NOTE_STATE="noteEstate";
     static  final String TITLE_STATE="titleState";
     private static final int RESULT_LOAD_IMAGE=1;
+    int noteId;
 
 
     @Override
@@ -78,17 +88,47 @@ public class NoteActivity extends AppCompatActivity {
 
             if (intent.hasExtra("noteTitle")){
 
+                noteId=intent.getIntExtra("noteid",0);
                 String titleFromExtra=intent.getStringExtra("noteTitle");
                 String noteTextFromExtra=intent.getStringExtra("noteText");
+                String noteImgPathFromExtra=intent.getStringExtra("noteImgPath");
+
+
 
                 MtitleNOte.setText(titleFromExtra);
                 Mnote.setText(noteTextFromExtra);
+
+
+                // Storage Permissions
+                 int REQUEST_EXTERNAL_STORAGE = 1;
+                String[] PERMISSIONS_STORAGE = {
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                };
+
+                int permission = ActivityCompat.checkSelfPermission(NoteActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+                if (permission != PackageManager.PERMISSION_GRANTED) {
+                    // We don't have permission so prompt the user
+                    ActivityCompat.requestPermissions(
+                            NoteActivity.this,
+                            PERMISSIONS_STORAGE,
+                            REQUEST_EXTERNAL_STORAGE
+                    );
+                }
+
+
+                mNoteImg.setImageBitmap(BitmapFactory.decodeFile(noteImgPathFromExtra));
+
+
+                Toast.makeText(this, "path from db= "+noteImgPathFromExtra, Toast.LENGTH_LONG).show();
 
 
 
             }
 
         }
+
 
 
 
@@ -179,7 +219,7 @@ public class NoteActivity extends AppCompatActivity {
         int id=item.getItemId();
         if (id==R.id.action_attach){
 
-            //Toast.makeText(this, "Attaching img comming soon!", Toast.LENGTH_SHORT).show();
+           // Toast.makeText(this, "Attaching img comming soon!", Toast.LENGTH_SHORT).show();
             activeGallery();
 
         }
@@ -199,12 +239,23 @@ public class NoteActivity extends AppCompatActivity {
             case RESULT_LOAD_IMAGE:
                 if (requestCode == RESULT_LOAD_IMAGE &&
                         resultCode == RESULT_OK && null != data) {
+
                     Uri selectedImage = data.getData();
                     String[] filePathColumn = {MediaStore.Images.Media.DATA};
 
-                   // DataUtils.dbInsert(mDb,filePathColumn[1]);
-                    Toast.makeText(this, "IMG ok ?", Toast.LENGTH_SHORT).show();
+                    Cursor cursor = getContentResolver()
+                            .query(selectedImage, filePathColumn, null, null,
+                                    null);
+                    cursor.moveToFirst();
 
+                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                    String picturePath = cursor.getString(columnIndex);
+                    cursor.close();
+                    Toast.makeText(this, picturePath+" id= "+noteId, Toast.LENGTH_SHORT).show();
+
+                    //image.setPath(picturePath);
+
+                   dbUpdateImg(mDb,noteId,picturePath,NoteActivity.this);
 
 
                 }
