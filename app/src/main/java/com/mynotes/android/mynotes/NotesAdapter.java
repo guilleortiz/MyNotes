@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.mynotes.android.mynotes.data.NotesContract;
 
@@ -25,9 +24,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
     final private NoteItemClickListener mOnClickListener;
 
 
-    public void kk(){
-        Toast.makeText(mcontext, "hhhh", Toast.LENGTH_SHORT).show();
-    }
+
 
     public Cursor swapCursor (Cursor c) {
         // check if this cursor is the same as the previous cursor (mCursor)

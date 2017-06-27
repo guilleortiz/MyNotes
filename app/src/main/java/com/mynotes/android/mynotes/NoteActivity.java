@@ -8,7 +8,6 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -23,6 +22,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.mynotes.android.mynotes.data.NotesContract;
 import com.mynotes.android.mynotes.data.NotesDbHelper;
 
@@ -119,10 +119,12 @@ public class NoteActivity extends AppCompatActivity {
                 }
 
 
-                mNoteImg.setImageBitmap(BitmapFactory.decodeFile(noteImgPathFromExtra));
+              //  mNoteImg.setImageBitmap(BitmapFactory.decodeFile(noteImgPathFromExtra));
+
+                Glide.with(this).load(noteImgPathFromExtra).into(mNoteImg);
 
 
-                Toast.makeText(this, "path from db= "+noteImgPathFromExtra, Toast.LENGTH_LONG).show();
+               // Toast.makeText(this, "path from db= "+noteImgPathFromExtra, Toast.LENGTH_LONG).show();
 
 
 
