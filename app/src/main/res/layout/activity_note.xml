@@ -4,27 +4,16 @@
 <RelativeLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/tools">
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floatingSaveActionButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        app:fabSize="normal"
 
-        app:srcCompat="@android:drawable/ic_menu_save"
-
-        app:elevation="9dp"
-        app:backgroundTint="?attr/colorPrimaryDark"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_margin="8dp" />
 
 <ScrollView android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android">
+
+
 
 
 
@@ -45,9 +34,10 @@
             <EditText
                 android:id="@+id/NoteTt"
                 android:hint="Titulo"
+                android:editable="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-              
+
 
 
                 android:textSize="20dp"
@@ -105,5 +95,62 @@
 
 
     </ScrollView>
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/floatingctionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:fabSize="normal"
+
+
+
+        app:elevation="9dp"
+        app:fab_addButtonColorNormal="@color/colorAccent"
+        app:backgroundTint="?attr/colorAccent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="8dp" >
+
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/accion_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_colorNormal="?attr/colorAccent"
+            fab:fab_icon="@drawable/ic_favorito"
+            fab:fab_size="mini"
+            fab:fab_title="Favorito"
+            app:fab_icon="@android:drawable/ic_menu_edit"
+            app:fab_colorNormal="@color/colorAccent" />
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/accion_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_colorNormal="?attr/colorAccent"
+            fab:fab_icon="@drawable/ic_buscar"
+            fab:fab_size="mini"
+            fab:fab_title="Buscar"
+            app:fab_icon="@android:drawable/ic_menu_delete"
+            app:fab_colorNormal="@color/colorAccent" />
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/accion_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_colorNormal="?attr/colorAccent"
+            fab:fab_icon="@drawable/ic_carro_compra"
+            fab:fab_size="mini"
+            fab:fab_title="Añadir a la cesta"
+            app:fab_icon="@android:drawable/ic_menu_save"
+            app:fab_colorNormal="@color/colorAccent" />
+
+
+
+
+
+
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
 </RelativeLayout>

@@ -12,7 +12,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.provider.MediaStore;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -23,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.mynotes.android.mynotes.data.NotesContract;
 import com.mynotes.android.mynotes.data.NotesDbHelper;
 
@@ -155,61 +155,136 @@ public class NoteActivity extends AppCompatActivity {
 
 
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.floatingSaveActionButton);
+       //final FloatingActionsMenu fab = (FloatingActionsMenu) findViewById(R.id.floatingSaveActionButton);
+
+
+
+        FloatingActionsMenu fab = (FloatingActionsMenu) findViewById(R.id.floatingctionButton);
+
+        View uno, dos, tres, cuatro;
+
+        uno = findViewById(R.id.accion_edit);
+        dos = findViewById(R.id.accion_delete);
+        cuatro = findViewById(R.id.accion_save);
+        //tres = findViewById(R.id.tres);
+
+        fab.setOnClickListener(this);
+        uno.setOnClickListener(this);
+        dos.setOnClickListener(this);
+       // tres.setOnClickListener(this);
+        cuatro.setOnClickListener(this);
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                NotesDbHelper dbHelper=new NotesDbHelper(NoteActivity.this);//create db
-                mDb=dbHelper.getWritableDatabase();
-
-                DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-                String date = df.format(Calendar.getInstance().getTime());
-
-                List<ContentValues> list= new ArrayList<ContentValues>();
+                 if(view.getId()==R.id.floatingctionButton){
 
 
+                    Toast.makeText(NoteActivity.this, "button", Toast.LENGTH_SHORT).show();
+
+                    NotesDbHelper dbHelper = new NotesDbHelper(NoteActivity.this);//create db
+                    mDb = dbHelper.getWritableDatabase();
+
+                    DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                    String date = df.format(Calendar.getInstance().getTime());
+
+                    List<ContentValues> list = new ArrayList<ContentValues>();
 
 
-                ContentValues cv= new ContentValues();
-                cv.put(NotesContract.COLUMN_TITLE,MtitleNOte.getText().toString());
-                cv.put(NotesContract.COLUMN_NOTE,Mnote.getText().toString());
-                cv.put(NotesContract.COLUMN_DATE,date);
-                list.add(cv);
+                    ContentValues cv = new ContentValues();
+                    cv.put(NotesContract.COLUMN_TITLE, MtitleNOte.getText().toString());
+                    cv.put(NotesContract.COLUMN_NOTE, Mnote.getText().toString());
+                    cv.put(NotesContract.COLUMN_DATE, date);
+                    list.add(cv);
 
-                //insert all guests in one transaction
-                try
-                {
-                    mDb.beginTransaction();
-                    //clear the table first
-                   // mDb.delete (NotesContract.TABLE_NAME,null,null);
-                    //go through the list and add one by one
-                    for(ContentValues c:list){
-                        mDb.insert(NotesContract.TABLE_NAME, null, c);
+                    //insert all guests in one transaction
+                    try {
+                        mDb.beginTransaction();
+                        //clear the table first
+                        // mDb.delete (NotesContract.TABLE_NAME,null,null);
+                        //go through the list and add one by one
+                        for (ContentValues c : list) {
+                            mDb.insert(NotesContract.TABLE_NAME, null, c);
+                        }
+                        mDb.setTransactionSuccessful();
+
+                    } catch (SQLException e) {
+                        //too bad :(
+                    } finally {
+                        mDb.endTransaction();
+
+
+                        finish();
                     }
-                    mDb.setTransactionSuccessful();
 
-                }
-                catch (SQLException e) {
-                    //too bad :(
-                }
-                finally
-                {
-                    mDb.endTransaction();
-
-
-
-                    finish();
-                }
-
+                 }
 
             }
+
+
+
+
         });
 
 
 
 
+
+
+
+
+
+/*
+        final Interpolator interpolador = AnimationUtils.loadInterpolator(getBaseContext(),
+                android.R.interpolator.fast_out_slow_in);
+
+        fab.animate()
+                .scaleX(0)
+                .scaleY(0)
+                .setInterpolator(interpolador)
+                .setDuration(600)
+                .setStartDelay(1000)
+                .setListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        fab.animate()
+                                .scaleY(1)
+                                .scaleX(1)
+                                .setInterpolator(interpolador)
+                                .setDuration(600)
+                                .start();
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animator animation) {
+
+                    }
+                });
+        */
+
+
     }
+
+
+
+
+
+
+
+
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
