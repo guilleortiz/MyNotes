@@ -51,6 +51,7 @@ public class NoteActivity extends AppCompatActivity {
     static  final String TITLE_STATE="titleState";
     private static final int RESULT_LOAD_IMAGE=1;
     int noteId;
+    String picturePath;
 
 
     @Override
@@ -205,6 +206,7 @@ public class NoteActivity extends AppCompatActivity {
 
 
 
+
     }
 
     @Override
@@ -249,7 +251,7 @@ public class NoteActivity extends AppCompatActivity {
                     cursor.moveToFirst();
 
                     int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                    String picturePath = cursor.getString(columnIndex);
+                    picturePath = cursor.getString(columnIndex);
                     cursor.close();
                     Toast.makeText(this, picturePath+" id= "+noteId, Toast.LENGTH_SHORT).show();
 
@@ -267,6 +269,7 @@ public class NoteActivity extends AppCompatActivity {
 
 
     }
+    //TODO:1 save o exit activity....
 
     private void activeGallery() {
         Intent intent = new Intent(Intent.ACTION_PICK,

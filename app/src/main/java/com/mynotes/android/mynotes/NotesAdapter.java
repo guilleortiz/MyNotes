@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mynotes.android.mynotes.data.NotesContract;
 
@@ -24,22 +25,18 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
     final private NoteItemClickListener mOnClickListener;
 
 
-
-    public NotesAdapter(Context mContext, Cursor cursor, NoteItemClickListener listener) {
-
-        mcontext=mContext;
-        mcursor=cursor;
-        //super(mcontext);
-        mOnClickListener = listener;
+    public void kk(){
+        Toast.makeText(mcontext, "hhhh", Toast.LENGTH_SHORT).show();
     }
 
     public Cursor swapCursor (Cursor c) {
         // check if this cursor is the same as the previous cursor (mCursor)
-        /*if (mcursor == c) {
-            return null; // bc nothing has changed
+
+        if (mcursor == c) {
+            return null ;// bc nothing has changed
         }
-        */
-        Cursor temp = mcursor;
+
+        Cursor temp = c;
         mcursor = c; // new cursor value assigned
 
         //check if this is a valid cursor, then update the cursor
@@ -48,6 +45,16 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
         }
         return temp;
     }
+    public NotesAdapter(Context mContext, Cursor cursor, NoteItemClickListener listener) {
+
+        mcontext=mContext;
+        mcursor=cursor;
+        //super(mcontext);
+        mOnClickListener = listener;
+
+    }
+
+
 
 
 
@@ -60,6 +67,8 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
 
         return  new ViewHolder(view);
     }
+
+
 
 
 
