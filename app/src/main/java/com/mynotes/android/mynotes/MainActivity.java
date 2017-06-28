@@ -16,7 +16,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.mynotes.android.mynotes.data.DataUtils;
 import com.mynotes.android.mynotes.data.NotesContract;
 import com.mynotes.android.mynotes.data.NotesDbHelper;
 
@@ -53,7 +52,7 @@ public class MainActivity extends AppCompatActivity
         NotesDbHelper dbHelper=new NotesDbHelper(this);//create db
 
         mDb=dbHelper.getWritableDatabase();
-        DataUtils.insertFakeData(mDb);
+       // DataUtils.insertFakeData(mDb);
 
 
         mRecyclerView=(RecyclerView)findViewById(R.id.my_recycler_view);
@@ -81,6 +80,8 @@ public class MainActivity extends AppCompatActivity
                 Class destinationActivity = NoteActivity.class;
 
                 Intent startActivityIntent = new Intent(context, destinationActivity);
+
+                startActivityIntent.putExtra("noteStatus","newNote");
 
 
                 startActivity(startActivityIntent);

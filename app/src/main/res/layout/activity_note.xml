@@ -34,7 +34,8 @@
             <EditText
                 android:id="@+id/NoteTt"
                 android:hint="Titulo"
-                android:editable="false"
+                android:focusable="false"
+                android:clickable="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
@@ -60,6 +61,13 @@
                 android:id="@+id/Note"
                 android:inputType="none"
                 android:lines="20"
+                    android:overScrollMode="always"
+                    android:scrollbarStyle="insideInset"
+                    android:scrollbars="vertical"
+
+
+                    android:focusable="false"
+                    android:clickable="false"
                     android:autoLink="web"
                 android:backgroundTint="@color/posit"
                 android:layout_width="match_parent"

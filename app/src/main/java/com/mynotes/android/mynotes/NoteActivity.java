@@ -2,6 +2,7 @@ package com.mynotes.android.mynotes;
 
 import android.Manifest;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -17,6 +18,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -52,6 +54,7 @@ public class NoteActivity extends AppCompatActivity {
     private static final int RESULT_LOAD_IMAGE=1;
     int noteId;
     String picturePath;
+    Boolean isNewNote;
 
 
     @Override
@@ -84,10 +87,13 @@ public class NoteActivity extends AppCompatActivity {
 
 
 
-        //When activity is cal from other activity
+        //When activity is call from other activity
         if (intent!=null){
 
             if (intent.hasExtra("noteTitle")){
+
+                isNewNote=false;
+
 
                 noteId=intent.getIntExtra("noteid",0);
                 String titleFromExtra=intent.getStringExtra("noteTitle");
@@ -119,12 +125,29 @@ public class NoteActivity extends AppCompatActivity {
                 }
 
 
-              //  mNoteImg.setImageBitmap(BitmapFactory.decodeFile(noteImgPathFromExtra));
-
                 Glide.with(this).load(noteImgPathFromExtra).into(mNoteImg);
 
 
-               // Toast.makeText(this, "path from db= "+noteImgPathFromExtra, Toast.LENGTH_LONG).show();
+            }else if(intent.hasExtra("noteStatus")){
+
+                isNewNote=true;
+
+                MtitleNOte.setFocusable(true);
+                MtitleNOte.setClickable(true);
+                MtitleNOte.setEnabled(true);
+                MtitleNOte.setFocusableInTouchMode(true);
+
+                Mnote.setFocusable(true);
+                Mnote.setClickable(true);
+                Mnote.setEnabled(true);
+                Mnote.setFocusableInTouchMode(true);
+
+
+                //set focus to note and display keyboard
+                MtitleNOte.requestFocus();
+
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.showSoftInput(MtitleNOte, InputMethodManager.SHOW_IMPLICIT);
 
 
 
@@ -161,27 +184,69 @@ public class NoteActivity extends AppCompatActivity {
 
         FloatingActionsMenu fab = (FloatingActionsMenu) findViewById(R.id.floatingctionButton);
 
-        View uno, dos, tres, cuatro;
+        final View editButton, deleteButton, savebutton;
 
-        uno = findViewById(R.id.accion_edit);
-        dos = findViewById(R.id.accion_delete);
-        cuatro = findViewById(R.id.accion_save);
-        //tres = findViewById(R.id.tres);
+        editButton = findViewById(R.id.accion_edit);
+        deleteButton = findViewById(R.id.accion_delete);
+        savebutton = findViewById(R.id.accion_save);
 
-        fab.setOnClickListener(this);
-        uno.setOnClickListener(this);
-        dos.setOnClickListener(this);
-       // tres.setOnClickListener(this);
-        cuatro.setOnClickListener(this);
 
-        fab.setOnClickListener(new View.OnClickListener() {
+
+        editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                 if(view.getId()==R.id.floatingctionButton){
 
 
-                    Toast.makeText(NoteActivity.this, "button", Toast.LENGTH_SHORT).show();
+
+                    Toast.makeText(NoteActivity.this, "edit", Toast.LENGTH_SHORT).show();
+
+                MtitleNOte.setFocusable(true);
+                MtitleNOte.setClickable(true);
+                MtitleNOte.setEnabled(true);
+                MtitleNOte.setFocusableInTouchMode(true);
+
+                Mnote.setFocusable(true);
+                Mnote.setClickable(true);
+                Mnote.setEnabled(true);
+                Mnote.setFocusableInTouchMode(true);
+
+
+                //set focus to note and display keyboard
+                Mnote.requestFocus();
+
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.showSoftInput(Mnote, InputMethodManager.SHOW_IMPLICIT);
+
+
+
+
+            }
+        });
+
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+
+
+                Toast.makeText(NoteActivity.this, "button2", Toast.LENGTH_SHORT).show();
+
+
+
+            }
+        });
+
+        savebutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                if (isNewNote==true){
+
+                    Toast.makeText(NoteActivity.this, "New note Save", Toast.LENGTH_SHORT).show();
+
 
                     NotesDbHelper dbHelper = new NotesDbHelper(NoteActivity.this);//create db
                     mDb = dbHelper.getWritableDatabase();
@@ -216,9 +281,68 @@ public class NoteActivity extends AppCompatActivity {
 
 
                         finish();
+
                     }
 
-                 }
+
+
+
+                }else{//is an existing note, we update it
+
+                    try {
+
+
+
+                        NotesDbHelper dbHelper = new NotesDbHelper(NoteActivity.this);//create db
+                        mDb = dbHelper.getWritableDatabase();
+
+                        mDb.beginTransaction();
+
+                        List<ContentValues> list = new ArrayList<ContentValues>();
+
+
+                        ContentValues cv = new ContentValues();
+                        cv.put(NotesContract.COLUMN_TITLE, MtitleNOte.getText().toString());
+                        cv.put(NotesContract.COLUMN_NOTE, Mnote.getText().toString());
+                        //cv.put(NotesContract.COLUMN_DATE, date);
+                        list.add(cv);
+
+
+                        String [] whereArgs=new String[]{
+                                String.valueOf(noteId)
+                        };
+
+                        for(ContentValues c:list){
+                            mDb.update(NotesContract.TABLE_NAME, c,NotesContract._ID+" = "+noteId,null);
+                        }
+                        mDb.setTransactionSuccessful();
+
+                    } catch (SQLException e) {
+                        //too bad :(
+                    } finally {
+                        mDb.endTransaction();
+
+                        Toast.makeText(NoteActivity.this, "note updated", Toast.LENGTH_SHORT).show();
+
+                        finish();
+
+                    }
+
+                }
+
+
+
+
+
+
+
+            }
+        });
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
 
             }
 
