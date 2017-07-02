@@ -90,7 +90,7 @@ public class NoteActivity extends AppCompatActivity {
         //When activity is call from other activity
         if (intent!=null){
 
-            if (intent.hasExtra("noteTitle")){
+            if (intent.hasExtra("noteText") ){
 
                 isNewNote=false;
 
@@ -128,7 +128,7 @@ public class NoteActivity extends AppCompatActivity {
                 Glide.with(this).load(noteImgPathFromExtra).into(mNoteImg);
 
 
-            }else if(intent.hasExtra("noteStatus")){
+            }else /*if(intent.hasExtra("noteStatus"))*/{//call from mainActivity
 
                 isNewNote=true;
 
