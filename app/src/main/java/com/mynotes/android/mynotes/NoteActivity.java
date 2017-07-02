@@ -47,6 +47,8 @@ public class NoteActivity extends AppCompatActivity {
 
 
 
+
+
     private SQLiteDatabase mDb;
 
     static final String NOTE_STATE="noteEstate";

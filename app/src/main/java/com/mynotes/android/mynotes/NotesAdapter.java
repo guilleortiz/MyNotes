@@ -6,8 +6,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.mynotes.android.mynotes.data.NotesContract;
 
 import java.util.ArrayList;
@@ -74,27 +76,56 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
 
         int idIndex =mcursor.getColumnIndex(NotesContract._ID);//we get the id to future swipe delete
         int noteTitleIndex=mcursor.getColumnIndex(NotesContract.COLUMN_TITLE);
+        int notePreviewIndex=mcursor.getColumnIndex(NotesContract.COLUMN_NOTE);
         int noteDateIndex=mcursor.getColumnIndex(NotesContract.COLUMN_DATE);
-        int noteDataTypeIndex=mcursor.getColumnIndex(NotesContract.COLUMN_DATA_TYPE);
+
+        int noteFotoIndex=mcursor.getColumnIndex(NotesContract.COLUMN_IMG);
 
         mcursor.moveToPosition(position);
 
         final int id =mcursor.getInt(idIndex);
         String noteTitle=mcursor.getString(noteTitleIndex);
-        String noteDataType=mcursor.getString(noteDataTypeIndex);
+        String notePreview=mcursor.getString(notePreviewIndex);
         String noteDate=mcursor.getString(noteDateIndex);
+        String noteFoto=mcursor.getString(noteFotoIndex);
 
 
         //set values
         holder.itemView.setTag(id);
         holder.notesTitle.setText(noteTitle);
-        holder.notesDataType.setText(noteDataType);
         holder.notesDate.setText(noteDate);
 
 
+        Glide.with(mcontext).load(noteFoto).into(holder.notesFoto);
+
+        holder.notestextPreview.setText(shortNote(notePreview));
+
+        //10palabras
 
 
 
+
+
+
+
+
+
+
+
+
+
+    }
+
+    public String shortNote(String fullNote){
+
+
+
+
+        //fullNote=fullNote+"...";
+
+
+
+        return fullNote;
     }
 
     public interface NoteItemClickListener{
@@ -107,15 +138,18 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
 
         TextView notesTitle;
         TextView notesDate;
-        TextView notesDataType;
+        TextView notestextPreview;
+        ImageView notesFoto;
 
 
 
         public ViewHolder(View itemView) {
             super(itemView);
             notesTitle=(TextView) itemView.findViewById(R.id.itemTitle);
-            notesDataType=(TextView) itemView.findViewById(R.id.itemDataType);
+            notestextPreview=(TextView) itemView.findViewById(R.id.notePreview);
+
             notesDate=(TextView) itemView.findViewById(R.id.itemDate);
+            notesFoto=(ImageView)itemView.findViewById(R.id.foto);
 
             itemView.setOnClickListener(this);
         }
