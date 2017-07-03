@@ -11,9 +11,8 @@
         android:layout_height="wrap_content"
         app:cardBackgroundColor="@color/posit"
         android:elevation="80dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_margin="4dp"
+
 
 
 
@@ -62,7 +61,7 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
 
-                android:padding="4dp"
+                android:padding="8dp"
                 android:src="@drawable/pin"
                 android:layout_gravity="right"/>
 

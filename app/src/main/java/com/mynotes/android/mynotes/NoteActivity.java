@@ -127,9 +127,22 @@ public class NoteActivity extends AppCompatActivity {
                 }
 
 
-                Glide.with(this).load(noteImgPathFromExtra).into(mNoteImg);
+               Glide.with(this).load(noteImgPathFromExtra).into(mNoteImg);
+                //Mnote.setCompoundDrawables(getResources().getDrawable(R.drawable.clips),getResources().getDrawable(R.drawable.clips),null,null);
 
+                /*
+                Glide.with(left.getContext())
+                        .load(((FixturesListObject) object).getHomeIcon())
+                        .asBitmap()
+                        .into(new SimpleTarget<Bitmap>(100,100) {
+                            @Override
+                            public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation) {
+                                left.setCompoundDrawablesWithIntrinsicBounds(null, new BitmapDrawable(left.getResources(),resource), null, null);
+                            }
+                        });
 
+                */
+                
             }else /*if(intent.hasExtra("noteStatus"))*/{//call from mainActivity
 
                 isNewNote=true;
