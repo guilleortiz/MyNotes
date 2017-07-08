@@ -1,8 +1,10 @@
 package com.mynotes.android.mynotes.data;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +18,6 @@ public class DataUtils {
 
     public  static void insertFakeData(SQLiteDatabase db){
 
-        //byte[] image
         if(db==null) {
             return;
         }
@@ -81,6 +82,50 @@ public class DataUtils {
 
 
 
+    }
+
+
+
+
+    public static void dbUpdateImg(SQLiteDatabase db, int id, String filepath, Context context){
+
+
+
+        List<ContentValues> list= new ArrayList<ContentValues>();
+
+        ContentValues cv= new ContentValues();
+        cv.put(NotesContract.COLUMN_IMG,filepath);
+
+        list.add(cv);
+
+        //insert all guests in one transaction
+        try
+        {
+            db.beginTransaction();
+            //clear the table first
+            // mDb.delete (NotesContract.TABLE_NAME,null,null);
+            //go through the list and add one by one
+
+            String [] whereArgs=new String[]{
+                    String.valueOf(id)
+            };
+
+            for(ContentValues c:list){
+                db.update(NotesContract.TABLE_NAME, c,NotesContract._ID+" = "+id,null);
+            }
+            db.setTransactionSuccessful();
+
+        }
+        catch (SQLException e) {
+            Toast.makeText(context, "error= "+e, Toast.LENGTH_SHORT).show();
+        }
+        finally
+        {
+            db.endTransaction();
+
+            Toast.makeText(context, "update img ok", Toast.LENGTH_SHORT).show();
+
+        }
     }
 
 

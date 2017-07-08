@@ -14,10 +14,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
-import com.mynotes.android.mynotes.data.DataUtils;
 import com.mynotes.android.mynotes.data.NotesContract;
 import com.mynotes.android.mynotes.data.NotesDbHelper;
+
 
 public class MainActivity extends AppCompatActivity
         implements NotesAdapter.NoteItemClickListener {
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity
 
     private NotesAdapter.NoteItemClickListener mOnClickListener;
     private SwipeRefreshLayout mSwipeRefreshLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +52,7 @@ public class MainActivity extends AppCompatActivity
         NotesDbHelper dbHelper=new NotesDbHelper(this);//create db
 
         mDb=dbHelper.getWritableDatabase();
-        DataUtils.insertFakeData(mDb);
+       // DataUtils.insertFakeData(mDb);
 
 
         mRecyclerView=(RecyclerView)findViewById(R.id.my_recycler_view);
@@ -78,6 +80,8 @@ public class MainActivity extends AppCompatActivity
                 Class destinationActivity = NoteActivity.class;
 
                 Intent startActivityIntent = new Intent(context, destinationActivity);
+
+                startActivityIntent.putExtra("noteStatus","newNote");
 
 
                 startActivity(startActivityIntent);
@@ -155,6 +159,14 @@ public class MainActivity extends AppCompatActivity
         );
     }
 
+    public void setAdapter(){//temporal trick to update the cursor...
+
+
+        Cursor cursor=getAll();
+
+        mAdapter=new NotesAdapter(this,cursor, this);
+        mRecyclerView.setAdapter(mAdapter);
+    }
 
 
 
@@ -185,15 +197,19 @@ public class MainActivity extends AppCompatActivity
 
 
         super.onResume();
-        //Toast.makeText(this, "resume", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "resume", Toast.LENGTH_SHORT).show();
 
-       // mAdapter.swapCursor(getAll());
+        setAdapter();
+
+
+     //  mAdapter.swapCursor(getAll());
 
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
+
         mAdapter.notifyDataSetChanged();
         //Toast.makeText(this, "restart", Toast.LENGTH_SHORT).show();
     }
@@ -213,14 +229,18 @@ public class MainActivity extends AppCompatActivity
         Cursor c=getData(title);
 
         c.moveToFirst();
+        int mNoteId=c.getInt(c.getColumnIndex(NotesContract._ID));
         String mNoteTitle= c.getString(c.getColumnIndex(NotesContract.COLUMN_TITLE));
         String mNote= c.getString(c.getColumnIndex(NotesContract.COLUMN_NOTE));
+        String mImgPath= c.getString(c.getColumnIndex(NotesContract.COLUMN_IMG));
 
-
+        openNote.putExtra("noteid",mNoteId);
         openNote.putExtra("noteTitle",mNoteTitle);
         openNote.putExtra("noteText",mNote);
+        openNote.putExtra("noteImgPath",mImgPath);
 
         startActivity(openNote);
+
 
 
     }
