@@ -10,6 +10,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.provider.MediaStore;
@@ -142,7 +143,7 @@ public class NoteActivity extends AppCompatActivity {
                         });
 
                 */
-                
+
             }else /*if(intent.hasExtra("noteStatus"))*/{//call from mainActivity
 
                 isNewNote=true;
@@ -494,6 +495,22 @@ public class NoteActivity extends AppCompatActivity {
     }
 
     void handleSendText(Intent intent) {
+
+        //Todo: bug to fix
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+
+
+            /*
+            Intent main_intent = new Intent(this, MainActivity.class);
+            TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+            stackBuilder.addNextIntentWithParentStack(main_intent);
+            */
+
+        }
+
+
+
         String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
         if (sharedText != null) {
             Mnote.setText(sharedText);
