@@ -7,12 +7,19 @@ package com.mynotes.android.mynotes.data;
 public class Note {
     String mNoteTitle;
     String mNote;
-    String mNoteImg;
+    String mDate;
+    String mImg;
 
 
-    public Note(String NoteTitle, String Note) {
-        mNoteTitle = NoteTitle;
-        mNote = Note;
+
+
+
+
+    public Note(String NoteTitle, String Note,String Date,String Img) {
+        this.mNoteTitle = NoteTitle;
+        this.mNote = Note;
+        this.mDate=Date;
+        this.mImg=Img;
 
     }
 

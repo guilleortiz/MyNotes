@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity
 
     private NotesAdapter.NoteItemClickListener mOnClickListener;
     private SwipeRefreshLayout mSwipeRefreshLayout;
+    private String orden="date";
 
 
     @Override
@@ -63,9 +64,7 @@ public class MainActivity extends AppCompatActivity
 
 
 
-        Cursor cursor=getAll();
-
-        mAdapter=new NotesAdapter(this,cursor, this);
+        mAdapter=new NotesAdapter(this,orden, this);
         mRecyclerView.setAdapter(mAdapter);
 
 
@@ -162,9 +161,9 @@ public class MainActivity extends AppCompatActivity
     public void setAdapter(){//temporal trick to update the cursor...
 
 
-        Cursor cursor=getAll();
 
-        mAdapter=new NotesAdapter(this,cursor, this);
+
+        mAdapter=new NotesAdapter(this,orden, this);
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -184,8 +183,24 @@ public class MainActivity extends AppCompatActivity
 
 
         if (id == R.id.action_settings) {
-            mDb.delete (NotesContract.TABLE_NAME,null,null);
+            //mDb.delete (NotesContract.TABLE_NAME,null,null);
             return true;
+        }
+        if (id== R.id.action_sort){
+            if(orden=="date"){
+                mAdapter=new NotesAdapter(this,"fav",this);
+                mRecyclerView.setAdapter(mAdapter);
+                orden="fav";
+                Toast.makeText(this, "Favorites", Toast.LENGTH_SHORT).show();
+
+            }else {
+                mAdapter=new NotesAdapter(this,"date",this);
+                mRecyclerView.setAdapter(mAdapter);
+                orden="date";
+                Toast.makeText(this, "Date", Toast.LENGTH_SHORT).show();
+
+            }
+
         }
 
         return super.onOptionsItemSelected(item);
@@ -197,7 +212,7 @@ public class MainActivity extends AppCompatActivity
 
 
         super.onResume();
-        Toast.makeText(this, "resume", Toast.LENGTH_SHORT).show();
+
 
         setAdapter();
 

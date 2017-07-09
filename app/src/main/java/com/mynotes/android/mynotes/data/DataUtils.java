@@ -2,6 +2,7 @@ package com.mynotes.android.mynotes.data;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.widget.Toast;
@@ -14,6 +15,128 @@ import java.util.List;
  */
 
 public class DataUtils {
+
+    private static DataUtils sInstance;
+    private SQLiteDatabase mDb;
+
+
+    private NotesDbHelper mNotesDbHelper;
+
+/**
+ * synchronized methods enable a simple strategy for preventing thread
+ * interference and memory consistency errors: if an object is visible
+ * to more than one thread, all reads or writes to that object's
+ * variables are done through synchronized methods.
+ */
+
+
+    public static synchronized DataUtils getInstance(Context context) {
+        if (sInstance == null) {
+            sInstance = new DataUtils(context.getApplicationContext());
+        }
+
+        return sInstance;
+    }
+
+
+
+
+
+    private DataUtils(Context context) {
+        mNotesDbHelper = new NotesDbHelper(context);
+
+        mDb = mNotesDbHelper.getWritableDatabase();
+    }
+
+    /**
+     * Return a {@link Cursor} that contains every note in the db
+     * @param sortOrder Sort order for the query
+     * @return {@link Cursor} containing all the results.
+     */
+
+    public Cursor getAllNotes(String sortOrder) {
+        Cursor cursor=null;
+
+
+        if (sortOrder=="date"){
+
+
+            cursor=mDb.query(
+                    NotesContract.TABLE_NAME,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    NotesContract.COLUMN_DATE+" DESC");
+
+        }else if (sortOrder=="fav"){
+
+
+              cursor=mDb.query(
+                    NotesContract.TABLE_NAME,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    NotesContract.COLUMN_TITLE);
+
+
+        }
+
+
+
+        return cursor;
+    }
+
+
+
+    /**
+     * Return a {@link Cursor} that contains a single Note for the given unique id.
+     *
+     * @param id Unique identifier for the Note record.
+     * @return {@link Cursor} containing the Note result.
+     */
+    public Cursor queryNoteById(int id) {
+
+
+
+        Cursor notes = getAllNotes("date");
+
+        notes.moveToPosition(id);
+
+        return notes;
+
+
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     public  static void insertFakeData(SQLiteDatabase db){

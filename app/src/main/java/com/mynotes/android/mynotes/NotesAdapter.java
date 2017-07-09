@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.mynotes.android.mynotes.data.DataUtils;
 import com.mynotes.android.mynotes.data.NotesContract;
 
 import java.util.ArrayList;
@@ -44,11 +45,11 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
         }
         return temp;
     }
-    public NotesAdapter(Context mContext, Cursor cursor, NoteItemClickListener listener) {
+    public NotesAdapter(Context mContext, String order, NoteItemClickListener listener) {
 
         mcontext=mContext;
-        mcursor=cursor;
-        //super(mcontext);
+        mcursor= DataUtils.getInstance(mContext).getAllNotes(order);
+
         mOnClickListener = listener;
 
     }
@@ -100,23 +101,12 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
 
         holder.notestextPreview.setText(shortNote(notePreview));
 
-        //10palabras
-
-
-
-
-
-
-
-
-
-
-
 
 
     }
 
     public String shortNote(String fullNote){
+        //adding ... to the preview, fix adding max length to texview
 
 
 
