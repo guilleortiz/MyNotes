@@ -80,7 +80,7 @@ public class DataUtils {
                     null,
                     null,
                     null,
-                    NotesContract.COLUMN_TITLE);
+                    NotesContract.COLUMN_FAV);
 
 
         }
@@ -88,6 +88,40 @@ public class DataUtils {
 
 
         return cursor;
+    }
+
+    public void updateNote(ContentValues cv,int noteId){
+
+        try {
+
+            mDb.beginTransaction();
+
+            List<ContentValues> list = new ArrayList<ContentValues>();
+
+
+            list.add(cv);
+
+
+            String [] whereArgs=new String[]{
+                    String.valueOf(noteId)
+            };
+
+            for(ContentValues c:list){
+                mDb.update(NotesContract.TABLE_NAME, c,NotesContract._ID+" = "+noteId,null);
+            }
+            mDb.setTransactionSuccessful();
+
+        } catch (SQLException e) {
+            //too bad :(
+        } finally {
+            mDb.endTransaction();
+
+
+        }
+
+
+
+
     }
 
 

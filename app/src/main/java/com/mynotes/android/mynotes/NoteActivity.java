@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
+import com.mynotes.android.mynotes.data.DataUtils;
 import com.mynotes.android.mynotes.data.NotesContract;
 import com.mynotes.android.mynotes.data.NotesDbHelper;
 
@@ -102,6 +103,7 @@ public class NoteActivity extends AppCompatActivity {
                 String titleFromExtra=intent.getStringExtra("noteTitle");
                 String noteTextFromExtra=intent.getStringExtra("noteText");
                 String noteImgPathFromExtra=intent.getStringExtra("noteImgPath");
+                int noteFavFromExtra=intent.getIntExtra("noteFav",0);
 
 
 
@@ -200,12 +202,37 @@ public class NoteActivity extends AppCompatActivity {
 
         FloatingActionsMenu fab = (FloatingActionsMenu) findViewById(R.id.floatingctionButton);
 
-        final View editButton, deleteButton, savebutton;
+        final View favButton,editButton, deleteButton, savebutton;
 
+        favButton=findViewById(R.id.accion_Fav);
         editButton = findViewById(R.id.accion_edit);
         deleteButton = findViewById(R.id.accion_delete);
         savebutton = findViewById(R.id.accion_save);
 
+
+        favButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(NoteActivity.this, "fav", Toast.LENGTH_SHORT).show();
+
+
+
+                ContentValues cv = new ContentValues();
+                cv.put(NotesContract.COLUMN_TITLE, MtitleNOte.getText().toString());
+                cv.put(NotesContract.COLUMN_NOTE, Mnote.getText().toString());
+
+
+                DataUtils.getInstance(NoteActivity.this).updateNote(cv,noteId);
+
+
+
+
+
+
+
+
+            }
+        });
 
 
         editButton.setOnClickListener(new View.OnClickListener() {
@@ -305,44 +332,15 @@ public class NoteActivity extends AppCompatActivity {
 
                 }else{//is an existing note, we update it
 
-                    try {
 
+                    ContentValues cv = new ContentValues();
+                    cv.put(NotesContract.COLUMN_TITLE, MtitleNOte.getText().toString());
+                    cv.put(NotesContract.COLUMN_NOTE, Mnote.getText().toString());
 
+                   DataUtils.getInstance(NoteActivity.this).updateNote(cv,noteId);
 
-                        NotesDbHelper dbHelper = new NotesDbHelper(NoteActivity.this);//create db
-                        mDb = dbHelper.getWritableDatabase();
+                    finish();
 
-                        mDb.beginTransaction();
-
-                        List<ContentValues> list = new ArrayList<ContentValues>();
-
-
-                        ContentValues cv = new ContentValues();
-                        cv.put(NotesContract.COLUMN_TITLE, MtitleNOte.getText().toString());
-                        cv.put(NotesContract.COLUMN_NOTE, Mnote.getText().toString());
-                        //cv.put(NotesContract.COLUMN_DATE, date);
-                        list.add(cv);
-
-
-                        String [] whereArgs=new String[]{
-                                String.valueOf(noteId)
-                        };
-
-                        for(ContentValues c:list){
-                            mDb.update(NotesContract.TABLE_NAME, c,NotesContract._ID+" = "+noteId,null);
-                        }
-                        mDb.setTransactionSuccessful();
-
-                    } catch (SQLException e) {
-                        //too bad :(
-                    } finally {
-                        mDb.endTransaction();
-
-                        Toast.makeText(NoteActivity.this, "note updated", Toast.LENGTH_SHORT).show();
-
-                        finish();
-
-                    }
 
                 }
 
@@ -438,7 +436,6 @@ public class NoteActivity extends AppCompatActivity {
         int id=item.getItemId();
         if (id==R.id.action_attach){
 
-           // Toast.makeText(this, "Attaching img comming soon!", Toast.LENGTH_SHORT).show();
             activeGallery();
 
         }

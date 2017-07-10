@@ -248,7 +248,9 @@ public class MainActivity extends AppCompatActivity
         String mNoteTitle= c.getString(c.getColumnIndex(NotesContract.COLUMN_TITLE));
         String mNote= c.getString(c.getColumnIndex(NotesContract.COLUMN_NOTE));
         String mImgPath= c.getString(c.getColumnIndex(NotesContract.COLUMN_IMG));
+        int mFavNote=c.getInt(c.getColumnIndex(NotesContract.COLUMN_FAV));
 
+        openNote.putExtra("noteFav",mFavNote);
         openNote.putExtra("noteid",mNoteId);
         openNote.putExtra("noteTitle",mNoteTitle);
         openNote.putExtra("noteText",mNote);

@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -79,6 +80,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
         int noteTitleIndex=mcursor.getColumnIndex(NotesContract.COLUMN_TITLE);
         int notePreviewIndex=mcursor.getColumnIndex(NotesContract.COLUMN_NOTE);
         int noteDateIndex=mcursor.getColumnIndex(NotesContract.COLUMN_DATE);
+        int noteFavIndex=mcursor.getColumnIndex(NotesContract.COLUMN_FAV);
 
         int noteFotoIndex=mcursor.getColumnIndex(NotesContract.COLUMN_IMG);
 
@@ -89,12 +91,18 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
         String notePreview=mcursor.getString(notePreviewIndex);
         String noteDate=mcursor.getString(noteDateIndex);
         String noteFoto=mcursor.getString(noteFotoIndex);
+        int noteFav=mcursor.getInt(noteDateIndex);
 
 
         //set values
         holder.itemView.setTag(id);
         holder.notesTitle.setText(noteTitle);
         holder.notesDate.setText(noteDate);
+        if (noteFav==1){
+            holder.notesfav.setChecked(true);
+        }else {
+           // holder.notesfav.setChecked(false);
+        }
 
 
         Glide.with(mcontext).load(noteFoto).into(holder.notesFoto);
@@ -130,6 +138,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
         TextView notesDate;
         TextView notestextPreview;
         ImageView notesFoto;
+        CheckBox notesfav;
 
 
 

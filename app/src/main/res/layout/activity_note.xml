@@ -122,6 +122,19 @@
 
 
         <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/accion_Fav"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_colorNormal="?attr/colorAccent"
+            fab:fab_icon="@drawable/ic_favorito"
+            fab:fab_size="mini"
+            fab:fab_title="Favorito"
+            app:fab_icon="@android:drawable/star_big_on"
+            app:fab_colorNormal="@color/colorAccent" />
+
+
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/accion_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
