@@ -80,7 +80,7 @@ public class DataUtils {
                     null,
                     null,
                     null,
-                    NotesContract.COLUMN_FAV);
+                    NotesContract.COLUMN_FAV+" DESC");
 
 
         }
@@ -115,6 +115,29 @@ public class DataUtils {
             //too bad :(
         } finally {
             mDb.endTransaction();
+
+
+        }
+
+
+
+
+    }
+    public void deleteNote(int noteId){
+
+        try {
+
+            String whereClause = "_id=?";
+            String[] whereArgs = new String[] { String.valueOf(noteId) };
+            mDb.delete(NotesContract.TABLE_NAME, whereClause, whereArgs);
+
+            //mDb.delete(NotesContract.TABLE_NAME,NotesContract._ID,new String[]{String.valueOf(noteId)});
+
+
+        } catch (SQLException e) {
+            //too bad :(
+        } finally {
+
 
 
         }

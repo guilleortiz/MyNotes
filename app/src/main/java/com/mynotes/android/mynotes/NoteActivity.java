@@ -56,9 +56,16 @@ public class NoteActivity extends AppCompatActivity {
     static final String NOTE_STATE="noteEstate";
     static  final String TITLE_STATE="titleState";
     private static final int RESULT_LOAD_IMAGE=1;
+
     int noteId;
+    String titleFromExtra;
+    String noteTextFromExtra;
+    String noteImgPathFromExtra;
+    int noteFavFromExtra;
+
     String picturePath;
     Boolean isNewNote;
+
 
 
     @Override
@@ -100,10 +107,10 @@ public class NoteActivity extends AppCompatActivity {
 
 
                 noteId=intent.getIntExtra("noteid",0);
-                String titleFromExtra=intent.getStringExtra("noteTitle");
-                String noteTextFromExtra=intent.getStringExtra("noteText");
-                String noteImgPathFromExtra=intent.getStringExtra("noteImgPath");
-                int noteFavFromExtra=intent.getIntExtra("noteFav",0);
+                titleFromExtra=intent.getStringExtra("noteTitle");
+                noteTextFromExtra=intent.getStringExtra("noteText");
+                noteImgPathFromExtra=intent.getStringExtra("noteImgPath");
+                noteFavFromExtra=intent.getIntExtra("noteFav",0);
 
 
 
@@ -213,16 +220,36 @@ public class NoteActivity extends AppCompatActivity {
         favButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(NoteActivity.this, "fav", Toast.LENGTH_SHORT).show();
 
 
 
-                ContentValues cv = new ContentValues();
-                cv.put(NotesContract.COLUMN_TITLE, MtitleNOte.getText().toString());
-                cv.put(NotesContract.COLUMN_NOTE, Mnote.getText().toString());
+                if (noteFavFromExtra==0){//if is note fav the update to fav
 
 
-                DataUtils.getInstance(NoteActivity.this).updateNote(cv,noteId);
+
+                    ContentValues cv = new ContentValues();
+                    cv.put(NotesContract.COLUMN_FAV,1);
+
+
+                    DataUtils.getInstance(NoteActivity.this).updateNote(cv,noteId);
+
+                    Toast.makeText(NoteActivity.this, "Note add to fav", Toast.LENGTH_SHORT).show();
+
+
+                }else {//update to no fav
+
+                    ContentValues cv = new ContentValues();
+                    cv.put(NotesContract.COLUMN_FAV,0);
+
+                    DataUtils.getInstance(NoteActivity.this).updateNote(cv,noteId);
+
+                    Toast.makeText(NoteActivity.this, "Note delete form fav", Toast.LENGTH_SHORT).show();
+
+
+
+                }
+
+
 
 
 
@@ -272,9 +299,10 @@ public class NoteActivity extends AppCompatActivity {
             public void onClick(View view) {
 
 
+            DataUtils.getInstance(NoteActivity.this).deleteNote(noteId);
 
-
-                Toast.makeText(NoteActivity.this, "button2", Toast.LENGTH_SHORT).show();
+                Toast.makeText(NoteActivity.this, "delete", Toast.LENGTH_SHORT).show();
+                finish();
 
 
 
@@ -343,6 +371,9 @@ public class NoteActivity extends AppCompatActivity {
 
 
                 }
+
+
+
 
 
 
@@ -469,9 +500,12 @@ public class NoteActivity extends AppCompatActivity {
                     cursor.close();
                     Toast.makeText(this, picturePath+" id= "+noteId, Toast.LENGTH_SHORT).show();
 
-                    //image.setPath(picturePath);
+
 
                    dbUpdateImg(mDb,noteId,picturePath,NoteActivity.this);
+
+                  //update img
+                    Glide.with(this).load(picturePath).into(mNoteImg);
 
 
                 }
@@ -483,7 +517,7 @@ public class NoteActivity extends AppCompatActivity {
 
 
     }
-    //TODO:1 save o exit activity....
+  
 
     private void activeGallery() {
         Intent intent = new Intent(Intent.ACTION_PICK,
@@ -493,7 +527,6 @@ public class NoteActivity extends AppCompatActivity {
 
     void handleSendText(Intent intent) {
 
-        //Todo: bug to fix
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
 

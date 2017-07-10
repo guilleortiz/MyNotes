@@ -31,16 +31,17 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <CheckBox
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/favNote"
-                            />
+                        <ImageView
+                            android:id="@+id/fabNote"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+
+                            app:srcCompat="@drawable/pin" />
                         <TextView
                             android:id="@+id/itemTitle"
                             android:text="Titulo"
                             android:gravity="left"
-                            android:textSize="25dp"
+                            android:textSize="20dp"
                             android:layout_gravity="left"
                             android:textColor="@color/cardview_dark_background"
                             android:padding="8dp"
@@ -56,7 +57,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
                         android:maxLines="4"
-                        android:layout_marginLeft="8dp"
+                        android:layout_marginLeft="35dp"
                     android:text="bla blabla blabla blablblabla a blabla blabla blabla blabla blabla blabla blabla blabla blabla bla "/>
 
 

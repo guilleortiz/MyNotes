@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -91,7 +90,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
         String notePreview=mcursor.getString(notePreviewIndex);
         String noteDate=mcursor.getString(noteDateIndex);
         String noteFoto=mcursor.getString(noteFotoIndex);
-        int noteFav=mcursor.getInt(noteDateIndex);
+        int noteFav=mcursor.getInt(noteFavIndex);
 
 
         //set values
@@ -99,9 +98,9 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
         holder.notesTitle.setText(noteTitle);
         holder.notesDate.setText(noteDate);
         if (noteFav==1){
-            holder.notesfav.setChecked(true);
+            holder.notesfav.setVisibility(View.VISIBLE);
         }else {
-           // holder.notesfav.setChecked(false);
+            holder.notesfav.setVisibility(View.INVISIBLE);
         }
 
 
@@ -138,17 +137,18 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
         TextView notesDate;
         TextView notestextPreview;
         ImageView notesFoto;
-        CheckBox notesfav;
+        ImageView notesfav;
 
 
 
         public ViewHolder(View itemView) {
             super(itemView);
+
             notesTitle=(TextView) itemView.findViewById(R.id.itemTitle);
             notestextPreview=(TextView) itemView.findViewById(R.id.notePreview);
-
             notesDate=(TextView) itemView.findViewById(R.id.itemDate);
             notesFoto=(ImageView)itemView.findViewById(R.id.foto);
+            notesfav=(ImageView)itemView.findViewById(R.id.fabNote);
 
             itemView.setOnClickListener(this);
         }

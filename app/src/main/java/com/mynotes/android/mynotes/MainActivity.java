@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity
 
 
         super.onCreate(savedInstanceState);
-        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
 
 
         setContentView(R.layout.activity_main);
@@ -236,12 +235,12 @@ public class MainActivity extends AppCompatActivity
     public void onNoteitemClick(int id, String title) {
 
 
-       // Toast.makeText(this, title, Toast.LENGTH_LONG).show();
-
         //open new notes activity
         Intent openNote=new Intent(MainActivity.this,NoteActivity.class);
 
-        Cursor c=getData(title);
+        //Cursor c = DataUtils.getInstance(MainActivity.this).queryNoteById(id);
+
+       Cursor c=getData(title);
 
         c.moveToFirst();
         int mNoteId=c.getInt(c.getColumnIndex(NotesContract._ID));
