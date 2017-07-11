@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ShareCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -299,7 +300,9 @@ public class NoteActivity extends AppCompatActivity {
             public void onClick(View view) {
 
 
-            DataUtils.getInstance(NoteActivity.this).deleteNote(noteId);
+           // DataUtils.getInstance(NoteActivity.this).deleteNote(noteId,NoteActivity.this);
+
+                mDb.delete(NotesContract.TABLE_NAME,NotesContract._ID+" = "+noteId, null);
 
                 Toast.makeText(NoteActivity.this, "delete", Toast.LENGTH_SHORT).show();
                 finish();
@@ -469,6 +472,11 @@ public class NoteActivity extends AppCompatActivity {
 
             activeGallery();
 
+        }else if (id==R.id.share){
+
+            shareText(titleFromExtra,noteTextFromExtra);
+
+
         }
 
 
@@ -517,7 +525,24 @@ public class NoteActivity extends AppCompatActivity {
 
 
     }
-  
+
+
+    private void shareText(String title,String textToShare) {
+        String mimeType = "text/plain";
+
+
+
+        ShareCompat.IntentBuilder
+            /* The from method specifies the Context from which this share is coming from */
+                .from(this)
+                .setType(mimeType)
+                .setChooserTitle(title)
+                .setText(title+": \n"+textToShare)
+                .startChooser();
+    }
+
+
+
 
     private void activeGallery() {
         Intent intent = new Intent(Intent.ACTION_PICK,

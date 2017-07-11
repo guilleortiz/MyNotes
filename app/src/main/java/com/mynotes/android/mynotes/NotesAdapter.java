@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.mynotes.android.mynotes.data.DataUtils;
@@ -29,7 +30,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
 
 
 
-    public Cursor swapCursor (Cursor c) {
+    public Cursor swapcursors (Cursor c) {
         // check if this cursor is the same as the previous cursor (mCursor)
 
         if (mcursor == c) {
@@ -131,7 +132,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
     }
 
     public class  ViewHolder extends RecyclerView.ViewHolder
-            implements View.OnClickListener {
+            implements View.OnClickListener,View.OnLongClickListener {
 
         TextView notesTitle;
         TextView notesDate;
@@ -152,6 +153,8 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
 
             itemView.setOnClickListener(this);
         }
+
+
 
         @Override
         public void onClick(View view) {
@@ -174,6 +177,14 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
 
 
         }
+
+
+        @Override
+        public boolean onLongClick(View view) {
+
+            Toast.makeText(mcontext, "aaaaaaaaa", Toast.LENGTH_SHORT).show();
+            return true;
+        }
     }
 
 
@@ -185,6 +196,15 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
      */
 
 
+    public void swapCursor(Cursor newCursor) {
+        // Always close the previous mCursor first
+        if (mcursor != null) mcursor.close();
+        mcursor = newCursor;
+        if (newCursor != null) {
+            // Force the RecyclerView to refresh
+            this.notifyDataSetChanged();
+        }
+    }
 
 
 
@@ -197,6 +217,9 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
         }
         return  mcursor.getCount();
     }
+
+
+
 
 
 

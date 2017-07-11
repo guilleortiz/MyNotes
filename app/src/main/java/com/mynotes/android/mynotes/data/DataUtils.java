@@ -123,20 +123,25 @@ public class DataUtils {
 
 
     }
-    public void deleteNote(int noteId){
+    public void deleteNote(int noteId,Context context){
 
+        mDb.beginTransaction();
         try {
 
-            String whereClause = "_id=?";
-            String[] whereArgs = new String[] { String.valueOf(noteId) };
-            mDb.delete(NotesContract.TABLE_NAME, whereClause, whereArgs);
+            mDb.delete(NotesContract.TABLE_NAME, NotesContract._ID+" = "+noteId, null);
+
+
+
+           // Toast.makeText(context, String.valueOf(result), Toast.LENGTH_SHORT).show();
 
             //mDb.delete(NotesContract.TABLE_NAME,NotesContract._ID,new String[]{String.valueOf(noteId)});
 
 
         } catch (SQLException e) {
             //too bad :(
+            Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
         } finally {
+            mDb.endTransaction();
 
 
 

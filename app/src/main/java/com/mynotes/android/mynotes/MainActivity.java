@@ -11,11 +11,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.mynotes.android.mynotes.data.DataUtils;
 import com.mynotes.android.mynotes.data.NotesContract;
 import com.mynotes.android.mynotes.data.NotesDbHelper;
 
@@ -27,7 +29,7 @@ public class MainActivity extends AppCompatActivity
     private SQLiteDatabase mDb;
 
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private NotesAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
     private NotesAdapter.NoteItemClickListener mOnClickListener;
@@ -52,7 +54,7 @@ public class MainActivity extends AppCompatActivity
         NotesDbHelper dbHelper=new NotesDbHelper(this);//create db
 
         mDb=dbHelper.getWritableDatabase();
-       // DataUtils.insertFakeData(mDb);
+
 
 
         mRecyclerView=(RecyclerView)findViewById(R.id.my_recycler_view);
@@ -89,6 +91,39 @@ public class MainActivity extends AppCompatActivity
 
             }
         });
+
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP,ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+
+
+                int id=(int)viewHolder.itemView.getTag();
+
+                //viewHolder.getAdapterPosition() position of list
+
+
+
+               // DataUtils.getInstance(MainActivity.this).deleteNote(id,MainActivity.this);
+
+                mDb.delete(NotesContract.TABLE_NAME,NotesContract._ID+" = "+id, null);
+
+               mAdapter.swapCursor(DataUtils.getInstance(MainActivity.this).getAllNotes("date"));
+              //  mAdapter.notifyDataSetChanged();
+               // onResume();
+
+            }
+        }).attachToRecyclerView(mRecyclerView);
+
+
+
+
+
+
 /*
 
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -182,7 +217,11 @@ public class MainActivity extends AppCompatActivity
 
 
         if (id == R.id.action_settings) {
+
+            mDb.delete(NotesContract.TABLE_NAME,NotesContract._ID+" = 1", null);
+
             //mDb.delete (NotesContract.TABLE_NAME,null,null);
+            setAdapter();
             return true;
         }
         if (id== R.id.action_sort){
@@ -208,12 +247,17 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onResume() {
+        Toast.makeText(this, "resume", Toast.LENGTH_SHORT).show();
 
+        mAdapter.swapCursor(DataUtils.getInstance(MainActivity.this).getAllNotes("date"));
 
+        //mAdapter.notifyItemRemoved(0);
+
+        setAdapter();
         super.onResume();
 
 
-        setAdapter();
+
 
 
      //  mAdapter.swapCursor(getAll());
@@ -224,6 +268,7 @@ public class MainActivity extends AppCompatActivity
     protected void onRestart() {
         super.onRestart();
 
+        setAdapter();
         mAdapter.notifyDataSetChanged();
         //Toast.makeText(this, "restart", Toast.LENGTH_SHORT).show();
     }

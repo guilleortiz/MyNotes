@@ -3,12 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-
+    <item
+        android:id="@+id/share"
+        android:orderInCategory="100"
+        android:icon="@android:drawable/ic_menu_share"
+        android:title=""
+        app:showAsAction="always"/>
     <item
         android:id="@+id/action_attach"
         android:orderInCategory="100"
         android:icon="@drawable/clips"
         android:title=""
        app:showAsAction="always"/>
+
 
 </menu>
