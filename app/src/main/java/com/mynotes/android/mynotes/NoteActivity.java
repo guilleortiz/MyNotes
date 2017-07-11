@@ -214,7 +214,7 @@ public class NoteActivity extends AppCompatActivity {
 
         favButton=findViewById(R.id.accion_Fav);
         editButton = findViewById(R.id.accion_edit);
-        deleteButton = findViewById(R.id.accion_delete);
+       // deleteButton = findViewById(R.id.accion_delete);
         savebutton = findViewById(R.id.accion_save);
 
 
@@ -295,13 +295,12 @@ public class NoteActivity extends AppCompatActivity {
             }
         });
 
-        deleteButton.setOnClickListener(new View.OnClickListener() {
+       /* deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
 
            // DataUtils.getInstance(NoteActivity.this).deleteNote(noteId,NoteActivity.this);
-
                 mDb.delete(NotesContract.TABLE_NAME,NotesContract._ID+" = "+noteId, null);
 
                 Toast.makeText(NoteActivity.this, "delete", Toast.LENGTH_SHORT).show();
@@ -311,6 +310,7 @@ public class NoteActivity extends AppCompatActivity {
 
             }
         });
+        */
 
         savebutton.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -145,16 +145,7 @@
             app:fab_icon="@android:drawable/ic_menu_edit"
             app:fab_colorNormal="@color/colorAccent" />
 
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/accion_delete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            fab:fab_colorNormal="?attr/colorAccent"
-            fab:fab_icon="@drawable/ic_buscar"
-            fab:fab_size="mini"
-            fab:fab_title="Buscar"
-            app:fab_icon="@android:drawable/ic_menu_delete"
-            app:fab_colorNormal="@color/colorAccent" />
+
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/accion_save"
