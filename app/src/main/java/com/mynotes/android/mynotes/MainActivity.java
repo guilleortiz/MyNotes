@@ -6,10 +6,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
@@ -124,6 +126,17 @@ public class MainActivity extends AppCompatActivity
 
 
 
+
+
+       // SearchView searchView=(SearchView) findViewById(R.id.search).getAct
+
+
+
+
+
+
+
+
 /*
 
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -207,6 +220,36 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        MenuItem searchItem=menu.findItem(R.id.action_search);
+        SearchView searchView=(SearchView) MenuItemCompat.getActionView(searchItem);
+
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                Toast.makeText(MainActivity.this, query, Toast.LENGTH_SHORT).show();
+
+                mAdapter=new NotesAdapter(MainActivity.this,query,MainActivity.this);
+
+                mRecyclerView.setAdapter(mAdapter);
+
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+
+
+
+        });
+
+
+
         return true;
     }
 
@@ -215,15 +258,6 @@ public class MainActivity extends AppCompatActivity
 
         int id = item.getItemId();
 
-
-        if (id == R.id.action_settings) {
-
-            mDb.delete(NotesContract.TABLE_NAME,NotesContract._ID+" = 1", null);
-
-            //mDb.delete (NotesContract.TABLE_NAME,null,null);
-            setAdapter();
-            return true;
-        }
         if (id== R.id.action_sort){
             if(orden=="date"){
                 mAdapter=new NotesAdapter(this,"fav",this);
@@ -305,6 +339,8 @@ public class MainActivity extends AppCompatActivity
 
 
     }
+
+
 
     private Cursor getData(String title) {
         String mtitle=title;

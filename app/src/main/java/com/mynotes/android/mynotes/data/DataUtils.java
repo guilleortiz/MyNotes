@@ -90,6 +90,29 @@ public class DataUtils {
         return cursor;
     }
 
+
+
+    public Cursor queryNotesByTitle(String title) {
+        Cursor cursor=null;
+
+        //%200%
+
+            cursor=mDb.query(
+                    NotesContract.TABLE_NAME,
+                    null,
+                    NotesContract.COLUMN_TITLE+" LIKE ? ",
+                    new String[] { "%"+ title+ "%"},
+                    null,
+                    null,
+                    null);
+
+
+
+
+        return cursor;
+    }
+
+
     public void updateNote(ContentValues cv,int noteId){
 
         try {

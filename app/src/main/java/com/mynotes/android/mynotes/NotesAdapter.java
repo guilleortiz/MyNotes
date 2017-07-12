@@ -48,12 +48,29 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
     }
     public NotesAdapter(Context mContext, String order, NoteItemClickListener listener) {
 
+
         mcontext=mContext;
-        mcursor= DataUtils.getInstance(mContext).getAllNotes(order);
+
+        if (order=="date" || order=="fav"){
+            mcursor= DataUtils.getInstance(mContext).getAllNotes(order);
+
+
+        }else {
+
+            mcursor= DataUtils.getInstance(mContext).queryNotesByTitle(order);
+
+        }
+
+
 
         mOnClickListener = listener;
 
     }
+
+
+
+
+
 
 
 
@@ -105,7 +122,9 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
         }
 
 
-        Glide.with(mcontext).load(noteFoto).into(holder.notesFoto);
+        Glide.with(mcontext).load(noteFoto)
+
+                .into(holder.notesFoto);
 
         holder.notestextPreview.setText(shortNote(notePreview));
 

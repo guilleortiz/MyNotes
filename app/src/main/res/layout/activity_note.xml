@@ -46,10 +46,7 @@
 
                 android:padding="8dp"
                 android:textStyle="normal|bold" />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@android:color/darker_gray" />
+
 
 
             <RelativeLayout
@@ -58,9 +55,10 @@
                 android:layout_height="wrap_content">
 
                 <EditText
+                    android:layout_weight="1"
                 android:id="@+id/Note"
                 android:inputType="none"
-                android:lines="20"
+                android:lines="10"
                     android:overScrollMode="always"
                     android:scrollbarStyle="insideInset"
                     android:scrollbars="vertical"
@@ -74,6 +72,7 @@
                 android:layout_height="wrap_content"
 
 
+
                     android:hint="Añade tu nota"
                 android:gravity="start"
                 android:background="@color/posit"
@@ -82,6 +81,8 @@
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
                     android:layout_margin="8dp">
+
+
 
             </EditText>
 
@@ -94,7 +95,8 @@
                 <ImageView
                     android:id="@+id/noteImg"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="300dp"
+                    android:layout_weight="1"
                     android:src="@drawable/pin"/>
 
 

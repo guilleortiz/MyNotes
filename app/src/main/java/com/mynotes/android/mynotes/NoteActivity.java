@@ -39,6 +39,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 import static com.mynotes.android.mynotes.data.DataUtils.dbUpdateImg;
 
@@ -138,7 +139,9 @@ public class NoteActivity extends AppCompatActivity {
                 }
 
 
-               Glide.with(this).load(noteImgPathFromExtra).into(mNoteImg);
+               Glide.with(this).load(noteImgPathFromExtra)
+                       .bitmapTransform(new RoundedCornersTransformation(NoteActivity.this,20,0))
+                       .into(mNoteImg);
                 //Mnote.setCompoundDrawables(getResources().getDrawable(R.drawable.clips),getResources().getDrawable(R.drawable.clips),null,null);
 
                 /*
@@ -513,7 +516,9 @@ public class NoteActivity extends AppCompatActivity {
                    dbUpdateImg(mDb,noteId,picturePath,NoteActivity.this);
 
                   //update img
-                    Glide.with(this).load(picturePath).into(mNoteImg);
+                    Glide.with(this).load(picturePath)
+                            .bitmapTransform(new RoundedCornersTransformation(NoteActivity.this,20,0))
+                            .into(mNoteImg);
 
 
                 }
