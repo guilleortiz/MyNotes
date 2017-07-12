@@ -11,32 +11,36 @@
         android:layout_height="wrap_content"
         app:cardBackgroundColor="@color/posit"
         android:elevation="80dp"
-        android:layout_margin="4dp"
+        android:layout_margin="4dp">
 
-
-
-
-        >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-                <LinearLayout
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_weight="1">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
                         <ImageView
                             android:id="@+id/fabNote"
                             android:layout_width="25dp"
                             android:layout_height="25dp"
-
                             app:srcCompat="@drawable/pin" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
                         <TextView
                             android:id="@+id/itemTitle"
                             android:text="Titulo"
@@ -44,54 +48,63 @@
                             android:textSize="20dp"
                             android:layout_gravity="left"
                             android:textColor="@color/cardview_dark_background"
-                            android:padding="8dp"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
 
-                    </LinearLayout>
+                            android:paddingBottom="4dp"
+                            android:paddingEnd="4dp"
+                            android:paddingStart="0dp" />
 
 
-                    <TextView
+                        <TextView
                         android:id="@+id/notePreview"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_gravity="left"
-                        android:maxLines="4"
-                        android:layout_marginLeft="35dp"
-                    android:text="bla blabla blabla blablblabla a blabla blabla blabla blabla blabla blabla blabla blabla blabla bla "/>
+                        android:maxLines="3"
+                            android:layout_weight="1"
 
+                        android:text="blblabla blabla blabla blabla bla "/>
+
+                        <TextView
+                            android:id="@+id/itemDate"
+                            android:text="12/08/18"
+                            android:gravity="left"
+                            android:textSize="15dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"/>
 
             </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
 
-            <ImageView
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+
+        <ImageView
                 android:id="@+id/foto"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-
-
+                android:layout_weight="1"
                 android:src="@drawable/pin"
                 android:layout_gravity="right"/>
 
 
 
-        <TextView
-            android:id="@+id/itemDate"
-            android:text="18/02/17"
-            android:gravity="right"
-            android:textSize="15dp"
-            android:padding="8dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
 
         </LinearLayout>
 
 
     </LinearLayout>
+
+
 
     </android.support.v7.widget.CardView>
 
