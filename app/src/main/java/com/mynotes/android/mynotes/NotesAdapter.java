@@ -111,20 +111,35 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
         int noteFav=mcursor.getInt(noteFavIndex);
 
 
+/*
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.height =80; //height recycleviewer
+        holder.itemView.setLayoutParams(params);
+
+*/
+
+
+
         //set values
         holder.itemView.setTag(id);
         holder.notesTitle.setText(noteTitle);
         holder.notesDate.setText(noteDate);
+
         if (noteFav==1){
             holder.notesfav.setVisibility(View.VISIBLE);
         }else {
             holder.notesfav.setVisibility(View.INVISIBLE);
         }
 
+        if (noteFoto==null || noteFoto==""){
 
-        Glide.with(mcontext).load(noteFoto)
 
-                .into(holder.notesFoto);
+        }else{
+            Glide.with(mcontext).load(noteFoto)
+                    .into(holder.notesFoto);
+        }
+
+
 
         holder.notestextPreview.setText(shortNote(notePreview));
 

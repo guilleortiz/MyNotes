@@ -229,7 +229,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public boolean onQueryTextSubmit(String query) {
 
-                Toast.makeText(MainActivity.this, query, Toast.LENGTH_SHORT).show();
+              //  Toast.makeText(MainActivity.this, query, Toast.LENGTH_SHORT).show();
 
                 mAdapter=new NotesAdapter(MainActivity.this,query,MainActivity.this);
 
@@ -281,9 +281,9 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onResume() {
-        Toast.makeText(this, "resume", Toast.LENGTH_SHORT).show();
+       // Toast.makeText(this, "resume", Toast.LENGTH_SHORT).show();
 
-        mAdapter.swapCursor(DataUtils.getInstance(MainActivity.this).getAllNotes("date"));
+       // mAdapter.swapCursor(DataUtils.getInstance(MainActivity.this).getAllNotes("date"));
 
         //mAdapter.notifyItemRemoved(0);
 

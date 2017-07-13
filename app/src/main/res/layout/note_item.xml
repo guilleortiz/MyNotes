@@ -37,8 +37,9 @@
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center_vertical">
 
 
                         <TextView
@@ -46,21 +47,21 @@
                             android:text="Titulo"
                             android:gravity="left"
                             android:textSize="20dp"
-                            android:layout_gravity="left"
+
                             android:textColor="@color/cardview_dark_background"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:maxLines="1"
 
-                            android:paddingBottom="4dp"
-                            android:paddingEnd="4dp"
-                            android:paddingStart="0dp" />
+                            android:paddingBottom="0dp"
+                            android:paddingEnd="0dp" />
 
 
                         <TextView
                         android:id="@+id/notePreview"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="left"
                         android:maxLines="3"
                             android:layout_weight="1"
@@ -70,11 +71,12 @@
                         <TextView
                             android:id="@+id/itemDate"
                             android:text="12/08/18"
-                            android:gravity="left"
-                            android:textSize="15dp"
+                            android:gravity="bottom|left"
+                            android:textSize="14sp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"/>
+                            android:layout_weight="0"
+                            android:paddingBottom="4dp" />
 
             </LinearLayout>
 
@@ -83,17 +85,16 @@
 
         <LinearLayout
             android:layout_width="1dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             android:layout_weight="1">
 
 
         <ImageView
                 android:id="@+id/foto"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_weight="1"
-                android:src="@drawable/pin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
                 android:layout_gravity="right"/>
 
 

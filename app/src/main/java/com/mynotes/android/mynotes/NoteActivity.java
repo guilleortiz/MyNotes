@@ -39,7 +39,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 import static com.mynotes.android.mynotes.data.DataUtils.dbUpdateImg;
 
@@ -140,7 +139,6 @@ public class NoteActivity extends AppCompatActivity {
 
 
                Glide.with(this).load(noteImgPathFromExtra)
-                       .bitmapTransform(new RoundedCornersTransformation(NoteActivity.this,20,0))
                        .into(mNoteImg);
                 //Mnote.setCompoundDrawables(getResources().getDrawable(R.drawable.clips),getResources().getDrawable(R.drawable.clips),null,null);
 
@@ -213,12 +211,16 @@ public class NoteActivity extends AppCompatActivity {
 
         FloatingActionsMenu fab = (FloatingActionsMenu) findViewById(R.id.floatingctionButton);
 
-        final View favButton,editButton, deleteButton, savebutton;
+
+        final View favButton,editButton, savebutton;
+
 
         favButton=findViewById(R.id.accion_Fav);
         editButton = findViewById(R.id.accion_edit);
-       // deleteButton = findViewById(R.id.accion_delete);
         savebutton = findViewById(R.id.accion_save);
+
+        fab.bringToFront();
+
 
 
         favButton.setOnClickListener(new View.OnClickListener() {
@@ -273,7 +275,7 @@ public class NoteActivity extends AppCompatActivity {
 
 
 
-                    Toast.makeText(NoteActivity.this, "edit", Toast.LENGTH_SHORT).show();
+                 //   Toast.makeText(NoteActivity.this, "edit", Toast.LENGTH_SHORT).show();
 
                 MtitleNOte.setFocusable(true);
                 MtitleNOte.setClickable(true);
@@ -322,7 +324,7 @@ public class NoteActivity extends AppCompatActivity {
 
                 if (isNewNote==true){
 
-                    Toast.makeText(NoteActivity.this, "New note Save", Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(NoteActivity.this, "New note Save", Toast.LENGTH_SHORT).show();
 
 
                     NotesDbHelper dbHelper = new NotesDbHelper(NoteActivity.this);//create db
@@ -338,6 +340,7 @@ public class NoteActivity extends AppCompatActivity {
                     cv.put(NotesContract.COLUMN_TITLE, MtitleNOte.getText().toString());
                     cv.put(NotesContract.COLUMN_NOTE, Mnote.getText().toString());
                     cv.put(NotesContract.COLUMN_DATE, date);
+                    cv.put(NotesContract.COLUMN_IMG, picturePath);
                     list.add(cv);
 
                     //insert all guests in one transaction
@@ -370,6 +373,7 @@ public class NoteActivity extends AppCompatActivity {
                     ContentValues cv = new ContentValues();
                     cv.put(NotesContract.COLUMN_TITLE, MtitleNOte.getText().toString());
                     cv.put(NotesContract.COLUMN_NOTE, Mnote.getText().toString());
+                    cv.put(NotesContract.COLUMN_IMG, picturePath);
 
                    DataUtils.getInstance(NoteActivity.this).updateNote(cv,noteId);
 
@@ -393,6 +397,7 @@ public class NoteActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
 
 
             }
@@ -452,14 +457,14 @@ public class NoteActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
 
 
 
 
-
-
-
-
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -509,16 +514,14 @@ public class NoteActivity extends AppCompatActivity {
                     int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                     picturePath = cursor.getString(columnIndex);
                     cursor.close();
-                    Toast.makeText(this, picturePath+" id= "+noteId, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(this, picturePath+" id= "+noteId, Toast.LENGTH_SHORT).show();
 
 
 
                    dbUpdateImg(mDb,noteId,picturePath,NoteActivity.this);
 
                   //update img
-                    Glide.with(this).load(picturePath)
-                            .bitmapTransform(new RoundedCornersTransformation(NoteActivity.this,20,0))
-                            .into(mNoteImg);
+                    Glide.with(this).load(picturePath).into(mNoteImg);
 
 
                 }
@@ -584,7 +587,7 @@ public class NoteActivity extends AppCompatActivity {
        // Bitmap img= BitmapFactory.decodeStream(imageUri);
 
         if (imageUri != null) {
-            Toast.makeText(this, "Imagen", Toast.LENGTH_SHORT).show();
+           // Toast.makeText(this, "Imagen", Toast.LENGTH_SHORT).show();
         }
     }
 
