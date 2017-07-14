@@ -9,13 +9,16 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardBackgroundColor="@color/posit"
         android:elevation="80dp"
-        android:layout_margin="4dp">
+        android:layout_margin="4dp"
+        app:cardElevation="9dp"
+        android:background="@drawable/possit"
+        app:cardBackgroundColor="@color/posit">
+
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -36,7 +39,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:gravity="center_vertical">
@@ -84,18 +87,20 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
             android:orientation="vertical"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:id="@+id/imgLayout">
 
 
         <ImageView
                 android:id="@+id/foto"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
 
-                android:layout_gravity="right"/>
+            android:paddingBottom="4dp"
+            android:paddingTop="4dp" />
 
 
 

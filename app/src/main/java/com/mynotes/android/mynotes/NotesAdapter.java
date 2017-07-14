@@ -83,6 +83,8 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
                 .inflate(R.layout.note_item,parent,false);
 
 
+
+
         return  new ViewHolder(view);
     }
 
@@ -135,8 +137,22 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
 
 
         }else{
+
+
             Glide.with(mcontext).load(noteFoto)
+
+                    .override(400,400)
+                    .centerCrop()
                     .into(holder.notesFoto);
+
+            //int with=holder.notesFoto.getWidth();
+            //int height=holder.notesFoto.getHeight();
+/*
+            Glide.with(mcontext).load(noteFoto)
+                    .override(with, height)
+                    .centerCrop()
+                    .into(holder.notesFoto);
+                    */
         }
 
 
