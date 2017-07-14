@@ -140,7 +140,6 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
 
 
             Glide.with(mcontext).load(noteFoto)
-
                     .override(400,400)
                     .centerCrop()
                     .into(holder.notesFoto);

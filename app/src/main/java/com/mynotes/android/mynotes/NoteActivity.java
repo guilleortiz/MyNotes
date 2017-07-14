@@ -521,7 +521,12 @@ public class NoteActivity extends AppCompatActivity {
                    dbUpdateImg(mDb,noteId,picturePath,NoteActivity.this);
 
                   //update img
-                    Glide.with(this).load(picturePath).into(mNoteImg);
+                    Glide.with(this).load(picturePath)
+
+
+                            .fitCenter()
+
+                            .into(mNoteImg);
 
 
                 }
