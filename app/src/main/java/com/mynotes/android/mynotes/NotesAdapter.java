@@ -2,10 +2,13 @@ package com.mynotes.android.mynotes;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +27,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
 
     private Cursor mcursor;
     private Context mcontext;
+    private boolean hasPhoto;
 
     final private NoteItemClickListener mOnClickListener;
 
@@ -83,6 +87,18 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
                 .inflate(R.layout.note_item,parent,false);
 
 
+        if (hasPhoto){
+
+
+           // view.setBackgroundColor(Color.parseColor("#a0f8ff"));
+           // view.chil
+
+
+
+
+        }
+
+
 
 
         return  new ViewHolder(view);
@@ -92,7 +108,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
 
 
 
-    @Override//replace with data orm dataset
+    @Override//replace with data form dataset
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         int idIndex =mcursor.getColumnIndex(NotesContract._ID);//we get the id to future swipe delete
@@ -100,8 +116,8 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
         int notePreviewIndex=mcursor.getColumnIndex(NotesContract.COLUMN_NOTE);
         int noteDateIndex=mcursor.getColumnIndex(NotesContract.COLUMN_DATE);
         int noteFavIndex=mcursor.getColumnIndex(NotesContract.COLUMN_FAV);
-
         int noteFotoIndex=mcursor.getColumnIndex(NotesContract.COLUMN_IMG);
+        int noteColorIndex=mcursor.getColumnIndex(NotesContract.COLUMN_NOTE_COLOR);
 
         mcursor.moveToPosition(position);
 
@@ -110,6 +126,18 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
         String notePreview=mcursor.getString(notePreviewIndex);
         String noteDate=mcursor.getString(noteDateIndex);
         String noteFoto=mcursor.getString(noteFotoIndex);
+        String noteColor=mcursor.getString(noteColorIndex);
+
+        if (noteFoto!=null || noteFoto!=""){
+
+            hasPhoto=true;
+
+
+        }else {
+            hasPhoto=false;
+        }
+
+
         int noteFav=mcursor.getInt(noteFavIndex);
 
 
@@ -126,6 +154,10 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
         holder.itemView.setTag(id);
         holder.notesTitle.setText(noteTitle);
         holder.notesDate.setText(noteDate);
+
+
+        holder.noteCard.setBackgroundColor(Color.parseColor("#a0f8ff"));
+
 
         if (noteFav==1){
             holder.notesfav.setVisibility(View.VISIBLE);
@@ -183,22 +215,29 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
     public class  ViewHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener,View.OnLongClickListener {
 
+        CardView noteCard;
         TextView notesTitle;
         TextView notesDate;
         TextView notestextPreview;
         ImageView notesFoto;
         ImageView notesfav;
 
+        GridLayout row_linearlayout;
+
 
 
         public ViewHolder(View itemView) {
             super(itemView);
 
+            noteCard=(CardView)itemView.findViewById(R.id.noteCard);
             notesTitle=(TextView) itemView.findViewById(R.id.itemTitle);
             notestextPreview=(TextView) itemView.findViewById(R.id.notePreview);
             notesDate=(TextView) itemView.findViewById(R.id.itemDate);
             notesFoto=(ImageView)itemView.findViewById(R.id.foto);
             notesfav=(ImageView)itemView.findViewById(R.id.fabNote);
+
+            //row_linearlayout=(LinearLayout)itemView.findViewById(R.id.);
+
 
             itemView.setOnClickListener(this);
         }

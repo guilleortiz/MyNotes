@@ -17,7 +17,9 @@ import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ShareCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.PopupMenu;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -341,6 +343,7 @@ public class NoteActivity extends AppCompatActivity {
                     cv.put(NotesContract.COLUMN_NOTE, Mnote.getText().toString());
                     cv.put(NotesContract.COLUMN_DATE, date);
                     cv.put(NotesContract.COLUMN_IMG, picturePath);
+                   // cv.put(NotesContract.COLUMN_NOTE_COLOR,);
                     list.add(cv);
 
                     //insert all guests in one transaction
@@ -475,6 +478,9 @@ public class NoteActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
+
+        View favButton=findViewById(R.id.action_color);
+
         int id=item.getItemId();
         if (id==R.id.action_attach){
 
@@ -485,6 +491,8 @@ public class NoteActivity extends AppCompatActivity {
             shareText(titleFromExtra,noteTextFromExtra);
 
 
+        }else if(id==R.id.action_color){
+            showPopup(  favButton);
         }
 
 
@@ -538,6 +546,18 @@ public class NoteActivity extends AppCompatActivity {
 
 
     }
+
+    public void showPopup(View v) {
+        PopupMenu popup = new PopupMenu(this, v);
+        MenuInflater inflater = popup.getMenuInflater();
+        inflater.inflate(R.menu.color_picker, popup.getMenu());
+        popup.show();
+    }
+
+
+
+
+
 
 
     private void shareText(String title,String textToShare) {

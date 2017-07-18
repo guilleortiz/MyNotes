@@ -9,11 +9,12 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -62,7 +63,10 @@ public class MainActivity extends AppCompatActivity
         mRecyclerView=(RecyclerView)findViewById(R.id.my_recycler_view);
         mRecyclerView.setHasFixedSize(true);
 
-        mLayoutManager=new LinearLayoutManager(this);
+
+        int mNoOfColumns = calculateNoOfColumns(getApplicationContext());
+
+        mLayoutManager=new GridLayoutManager(this,mNoOfColumns);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
 
@@ -175,6 +179,13 @@ public class MainActivity extends AppCompatActivity
 
 
 
+    }
+
+    public static int calculateNoOfColumns(Context context) {
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
+        int noOfColumns = (int) (dpWidth / 180);
+        return noOfColumns;
     }
 
 

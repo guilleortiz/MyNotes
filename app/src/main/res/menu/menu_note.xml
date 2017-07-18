@@ -12,9 +12,21 @@
     <item
         android:id="@+id/action_attach"
         android:orderInCategory="100"
-        android:icon="@drawable/clips"
+        android:icon="@android:drawable/ic_menu_gallery"
         android:title=""
        app:showAsAction="always"/>
+
+    app:showAsAction="always"/>
+    <item
+        android:id="@+id/action_color"
+        android:orderInCategory="100"
+        android:icon="@android:drawable/ic_menu_manage"
+        android:title=""
+        app:showAsAction="always"/>
+
+
+
+
 
 
 </menu>
