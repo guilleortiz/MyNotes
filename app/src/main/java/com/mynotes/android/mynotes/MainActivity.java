@@ -337,6 +337,7 @@ public class MainActivity extends AppCompatActivity
         String mNoteTitle= c.getString(c.getColumnIndex(NotesContract.COLUMN_TITLE));
         String mNote= c.getString(c.getColumnIndex(NotesContract.COLUMN_NOTE));
         String mImgPath= c.getString(c.getColumnIndex(NotesContract.COLUMN_IMG));
+        String mNoteColor=c.getString(c.getColumnIndex(NotesContract.COLUMN_NOTE_COLOR));
         int mFavNote=c.getInt(c.getColumnIndex(NotesContract.COLUMN_FAV));
 
         openNote.putExtra("noteFav",mFavNote);
@@ -344,6 +345,7 @@ public class MainActivity extends AppCompatActivity
         openNote.putExtra("noteTitle",mNoteTitle);
         openNote.putExtra("noteText",mNote);
         openNote.putExtra("noteImgPath",mImgPath);
+        openNote.putExtra("noteColor",mNoteColor);
 
         startActivity(openNote);
 

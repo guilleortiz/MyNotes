@@ -2,6 +2,7 @@
 
 
 <RelativeLayout android:layout_width="match_parent"
+    android:id="@+id/note_back"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -87,27 +88,32 @@
             android:id="@+id/activity_note"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingTop="@dimen/activity_vertical_margin"
             android:orientation="vertical"
             tools:context="com.mynotes.android.mynotes.NoteActivity"
             app:layout_collapseParallaxMultiplier="0.7">
 
-            <EditText
-                android:id="@+id/NoteTt"
-                android:hint="Titulo"
-                android:focusable="false"
-                android:clickable="false"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+
+                <EditText
+                    android:id="@+id/NoteTt"
+                    android:hint="Titulo"
+                    android:focusable="false"
+                    android:clickable="false"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
 
 
 
-                android:textSize="20dp"
-                android:gravity="center"
+                    android:textSize="20dp"
+                    android:gravity="center"
 
-                android:padding="8dp"
-                android:textStyle="normal|bold"
-                android:background="@android:color/transparent" />
+                    android:padding="8dp"
+                    android:textStyle="normal|bold"
+                    android:background="@android:color/transparent" />
+
+
+
+
+
 
 
 
@@ -130,7 +136,6 @@
                     android:focusable="false"
                     android:clickable="false"
                     android:autoLink="web"
-                    android:backgroundTint="@color/posit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
 

@@ -155,8 +155,12 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
         holder.notesTitle.setText(noteTitle);
         holder.notesDate.setText(noteDate);
 
+        if (noteColor==null){
 
-        holder.noteCard.setBackgroundColor(Color.parseColor("#a0f8ff"));
+            noteColor="#ffff75";
+        }
+
+        holder.noteCard.setBackgroundColor(Color.parseColor(noteColor));
 
 
         if (noteFav==1){

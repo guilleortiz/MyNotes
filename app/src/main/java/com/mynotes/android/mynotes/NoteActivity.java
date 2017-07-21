@@ -9,6 +9,8 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,14 +19,13 @@ import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ShareCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.PopupMenu;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -49,6 +50,8 @@ public class NoteActivity extends AppCompatActivity {
     @BindView(R.id.Note) EditText Mnote;
     @BindView(R.id.NoteTt) EditText MtitleNOte;
     @BindView(R.id.noteImg)ImageView mNoteImg;
+    @BindView(R.id.note_back)RelativeLayout mBackground;
+    String noteColor;
 
 
 
@@ -64,15 +67,22 @@ public class NoteActivity extends AppCompatActivity {
     String titleFromExtra;
     String noteTextFromExtra;
     String noteImgPathFromExtra;
+    String noteColorFromExtra;
     int noteFavFromExtra;
+
+    int count=0;
 
     String picturePath;
     Boolean isNewNote;
 
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
+
 
 
 
@@ -114,11 +124,32 @@ public class NoteActivity extends AppCompatActivity {
                 noteTextFromExtra=intent.getStringExtra("noteText");
                 noteImgPathFromExtra=intent.getStringExtra("noteImgPath");
                 noteFavFromExtra=intent.getIntExtra("noteFav",0);
+                noteColorFromExtra=intent.getStringExtra("noteColor");
 
 
 
                 MtitleNOte.setText(titleFromExtra);
                 Mnote.setText(noteTextFromExtra);
+
+                if (noteColorFromExtra==null || noteColorFromExtra==""){
+
+                    MtitleNOte.setBackgroundColor(Color.parseColor("#ffff75" ));
+                    Mnote.setBackgroundColor(Color.parseColor("#ffff75" ));
+
+
+                }else {
+
+
+                    MtitleNOte.setBackgroundColor(Color.parseColor(noteColorFromExtra ));
+                    Mnote.setBackgroundColor(Color.parseColor(noteColorFromExtra ));
+
+                    mBackground.setBackgroundColor(Color.parseColor(noteColorFromExtra));
+
+                }
+
+
+
+                //Mnote.setBackgroundTintList(contextInstance.getResources().getColorStateList(R.color.your_xml_name));
 
 
                 // Storage Permissions
@@ -342,6 +373,17 @@ public class NoteActivity extends AppCompatActivity {
                     cv.put(NotesContract.COLUMN_TITLE, MtitleNOte.getText().toString());
                     cv.put(NotesContract.COLUMN_NOTE, Mnote.getText().toString());
                     cv.put(NotesContract.COLUMN_DATE, date);
+
+                    //The mask makes sure you only get RRGGBB, and the %06X gives you zero-padded hex (always 6 chars long):
+                    ColorDrawable notecolor=(ColorDrawable) mBackground.getBackground();
+                    int myNoteColor=notecolor.getColor();
+
+
+                    String hexColor = String.format("#%06X", (0xFFFFFF & myNoteColor));
+
+
+                    cv.put(NotesContract.COLUMN_NOTE_COLOR, hexColor);
+
                     cv.put(NotesContract.COLUMN_IMG, picturePath);
                    // cv.put(NotesContract.COLUMN_NOTE_COLOR,);
                     list.add(cv);
@@ -376,6 +418,17 @@ public class NoteActivity extends AppCompatActivity {
                     ContentValues cv = new ContentValues();
                     cv.put(NotesContract.COLUMN_TITLE, MtitleNOte.getText().toString());
                     cv.put(NotesContract.COLUMN_NOTE, Mnote.getText().toString());
+
+                    //The mask makes sure you only get RRGGBB, and the %06X gives you zero-padded hex (always 6 chars long):
+                    ColorDrawable notecolor=(ColorDrawable) mBackground.getBackground();
+                    int myNoteColor=notecolor.getColor();
+
+
+                    String hexColor = String.format("#%06X", (0xFFFFFF & myNoteColor));
+
+
+                    cv.put(NotesContract.COLUMN_NOTE_COLOR, hexColor);
+
                     cv.put(NotesContract.COLUMN_IMG, picturePath);
 
                    DataUtils.getInstance(NoteActivity.this).updateNote(cv,noteId);
@@ -418,43 +471,8 @@ public class NoteActivity extends AppCompatActivity {
 
 
 
-/*
-        final Interpolator interpolador = AnimationUtils.loadInterpolator(getBaseContext(),
-                android.R.interpolator.fast_out_slow_in);
 
-        fab.animate()
-                .scaleX(0)
-                .scaleY(0)
-                .setInterpolator(interpolador)
-                .setDuration(600)
-                .setStartDelay(1000)
-                .setListener(new Animator.AnimatorListener() {
-                    @Override
-                    public void onAnimationStart(Animator animation) {
 
-                    }
-
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        fab.animate()
-                                .scaleY(1)
-                                .scaleX(1)
-                                .setInterpolator(interpolador)
-                                .setDuration(600)
-                                .start();
-                    }
-
-                    @Override
-                    public void onAnimationCancel(Animator animation) {
-
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animator animation) {
-
-                    }
-                });
-        */
 
 
     }
@@ -492,7 +510,32 @@ public class NoteActivity extends AppCompatActivity {
 
 
         }else if(id==R.id.action_color){
-            showPopup(  favButton);
+
+             String[] colors={
+                   "#ffff75",
+                    "#a0f8ff",
+                    "#f69cb8",
+                    "#b7f869"
+            };
+
+
+            if (count>=colors.length){
+                count=0;
+            }else{
+                MtitleNOte.setBackgroundColor(Color.parseColor(colors[count] ));
+                Mnote.setBackgroundColor(Color.parseColor(colors[count] ));
+
+                mBackground.setBackgroundColor(Color.parseColor(colors[count] ));
+
+                noteColor=colors[count];
+
+                count++;
+
+
+            }
+
+
+
         }
 
 
@@ -547,11 +590,19 @@ public class NoteActivity extends AppCompatActivity {
 
     }
 
-    public void showPopup(View v) {
-        PopupMenu popup = new PopupMenu(this, v);
+    public void showPopup() {
+
+       /* ImageView colorView;
+        colorView=(ImageView)findViewById(R.id.note_color);
+
+
+
+        PopupMenu popup = new PopupMenu(this, colorView);
+
         MenuInflater inflater = popup.getMenuInflater();
         inflater.inflate(R.menu.color_picker, popup.getMenu());
         popup.show();
+        */
     }
 
 
