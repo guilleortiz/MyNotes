@@ -84,7 +84,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View view= LayoutInflater.from(mcontext)
-                .inflate(R.layout.note_item,parent,false);
+                .inflate(R.layout.note_item_v2,parent,false);
 
 
         if (hasPhoto){
@@ -180,6 +180,11 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
                     .centerCrop()
                     .into(holder.notesFoto);
 
+
+
+
+
+
             //int with=holder.notesFoto.getWidth();
             //int height=holder.notesFoto.getHeight();
 /*
@@ -224,6 +229,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
         TextView notesDate;
         TextView notestextPreview;
         ImageView notesFoto;
+        ImageView imageViewfoto;
         ImageView notesfav;
 
         GridLayout row_linearlayout;
@@ -238,6 +244,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
             notestextPreview=(TextView) itemView.findViewById(R.id.notePreview);
             notesDate=(TextView) itemView.findViewById(R.id.itemDate);
             notesFoto=(ImageView)itemView.findViewById(R.id.foto);
+            imageViewfoto=(ImageView)itemView.findViewById(R.id.imageViewfoto);
             notesfav=(ImageView)itemView.findViewById(R.id.fabNote);
 
             //row_linearlayout=(LinearLayout)itemView.findViewById(R.id.);

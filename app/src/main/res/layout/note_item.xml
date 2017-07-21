@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:weightSum="1">
 
 
     <android.support.v7.widget.CardView
@@ -14,12 +15,13 @@
         android:layout_margin="4dp"
         app:cardElevation="9dp"
         android:background="@drawable/possit"
-        app:cardBackgroundColor="@color/posit">
+        app:cardBackgroundColor="@color/posit"
+        android:layout_weight="14">
 
 
-    <LinearLayout
+        <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -125,6 +127,13 @@
 
 
     </android.support.v7.widget.CardView>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageViewfoto"
+        android:layout_weight="14"
+        android:layout_margin="4dp" />
 
 
 </LinearLayout>
