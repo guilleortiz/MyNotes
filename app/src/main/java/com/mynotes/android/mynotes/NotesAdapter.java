@@ -8,8 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -86,17 +86,11 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
         View view= LayoutInflater.from(mcontext)
                 .inflate(R.layout.note_item_v2,parent,false);
 
-
-        if (hasPhoto){
-
-
-           // view.setBackgroundColor(Color.parseColor("#a0f8ff"));
-           // view.chil
-
-
-
+        if(hasPhoto==true){
 
         }
+
+
 
 
 
@@ -128,13 +122,22 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
         String noteFoto=mcursor.getString(noteFotoIndex);
         String noteColor=mcursor.getString(noteColorIndex);
 
-        if (noteFoto!=null || noteFoto!=""){
+        if (noteFoto==null || noteFoto==""){
 
             hasPhoto=true;
 
 
+            Toast.makeText(mcontext, "no hay foto", Toast.LENGTH_SHORT).show();
+
+
+
         }else {
             hasPhoto=false;
+
+
+
+                Toast.makeText(mcontext, "hay foto", Toast.LENGTH_SHORT).show();
+
         }
 
 
@@ -232,7 +235,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
         ImageView imageViewfoto;
         ImageView notesfav;
 
-        GridLayout row_linearlayout;
+        LinearLayout photoLinearLayout;
 
 
 
@@ -247,7 +250,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
             imageViewfoto=(ImageView)itemView.findViewById(R.id.imageViewfoto);
             notesfav=(ImageView)itemView.findViewById(R.id.fabNote);
 
-            //row_linearlayout=(LinearLayout)itemView.findViewById(R.id.);
+            photoLinearLayout=(LinearLayout)itemView.findViewById(R.id.photo_linear);
 
 
             itemView.setOnClickListener(this);
