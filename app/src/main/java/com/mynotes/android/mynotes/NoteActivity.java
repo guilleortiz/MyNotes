@@ -51,7 +51,15 @@ public class NoteActivity extends AppCompatActivity {
     @BindView(R.id.NoteTt) EditText MtitleNOte;
     @BindView(R.id.noteImg)ImageView mNoteImg;
     @BindView(R.id.note_back)RelativeLayout mBackground;
+   // @BindView(R.id.action_attach)  MenuView.ItemView mAction_attach;
+    //@BindView(R.id.action_color)  MenuView.ItemView mAction_color;
+
     String noteColor;
+
+    MenuItem addImg;
+    MenuItem changeColor;
+
+    Boolean imgChange=false;
 
 
 
@@ -119,6 +127,10 @@ public class NoteActivity extends AppCompatActivity {
                 isNewNote=false;
 
 
+               // addImg.setVisible(false);
+                //changeColor.setVisible(false);
+
+
                 noteId=intent.getIntExtra("noteid",0);
                 titleFromExtra=intent.getStringExtra("noteTitle");
                 noteTextFromExtra=intent.getStringExtra("noteText");
@@ -130,6 +142,9 @@ public class NoteActivity extends AppCompatActivity {
 
                 MtitleNOte.setText(titleFromExtra);
                 Mnote.setText(noteTextFromExtra);
+
+               // addImg.setVisible(true);
+                //changeColor.setVisible(true);
 
                 if (noteColorFromExtra==null || noteColorFromExtra==""){
 
@@ -208,6 +223,13 @@ public class NoteActivity extends AppCompatActivity {
 
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.showSoftInput(MtitleNOte, InputMethodManager.SHOW_IMPLICIT);
+
+
+               // invalidateOptionsMenu();
+                //addImg.setVisible(true);
+                //changeColor.setVisible(true);
+
+
 
 
 
@@ -320,6 +342,23 @@ public class NoteActivity extends AppCompatActivity {
                 Mnote.setEnabled(true);
                 Mnote.setFocusableInTouchMode(true);
 
+                addImg.setVisible(true);
+                changeColor.setVisible(true);
+
+/*
+*
+* 			BUGS
+-al quitar fav de nota la imagen se pierde
+-al abrir una nota y darle a guardar de nueva la img se pierde porque el path se
+establece solo cuando se elige la img de galeria
+*
+*
+*
+* */
+
+
+
+
 
                 //set focus to note and display keyboard
                 Mnote.requestFocus();
@@ -373,6 +412,7 @@ public class NoteActivity extends AppCompatActivity {
                     cv.put(NotesContract.COLUMN_TITLE, MtitleNOte.getText().toString());
                     cv.put(NotesContract.COLUMN_NOTE, Mnote.getText().toString());
                     cv.put(NotesContract.COLUMN_DATE, date);
+                    cv.put(NotesContract.COLUMN_IMG, picturePath);
 
                     //The mask makes sure you only get RRGGBB, and the %06X gives you zero-padded hex (always 6 chars long):
                     ColorDrawable notecolor=(ColorDrawable) mBackground.getBackground();
@@ -383,9 +423,6 @@ public class NoteActivity extends AppCompatActivity {
 
 
                     cv.put(NotesContract.COLUMN_NOTE_COLOR, hexColor);
-
-                    cv.put(NotesContract.COLUMN_IMG, picturePath);
-                   // cv.put(NotesContract.COLUMN_NOTE_COLOR,);
                     list.add(cv);
 
                     //insert all guests in one transaction
@@ -429,7 +466,12 @@ public class NoteActivity extends AppCompatActivity {
 
                     cv.put(NotesContract.COLUMN_NOTE_COLOR, hexColor);
 
-                    cv.put(NotesContract.COLUMN_IMG, picturePath);
+                    if (imgChange==true){
+                        cv.put(NotesContract.COLUMN_IMG, picturePath);
+
+                    }
+
+
 
                    DataUtils.getInstance(NoteActivity.this).updateNote(cv,noteId);
 
@@ -490,6 +532,13 @@ public class NoteActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_note,menu);
+        addImg=menu.findItem(R.id.action_attach);
+        changeColor=menu.findItem(R.id.action_color);
+
+
+        menu.getItem(1).setVisible(false);//add img
+        menu.getItem(2).setVisible(false);//change color
+
         return true;
     }
 
@@ -514,20 +563,37 @@ public class NoteActivity extends AppCompatActivity {
              String[] colors={
                    "#ffff75",
                     "#a0f8ff",
-                    "#f69cb8",
-                    "#b7f869"
+                    "#ec95ba",
+                    "#c7f163"
             };
 
 
             if (count>=colors.length){
                 count=0;
-            }else{
+                Toast.makeText(this, String.valueOf(count), Toast.LENGTH_SHORT).show();
+
+
+
+                    MtitleNOte.setBackgroundColor(Color.parseColor(colors[count] ));
+                    Mnote.setBackgroundColor(Color.parseColor(colors[count] ));
+
+                    mBackground.setBackgroundColor(Color.parseColor(colors[count] ));
+
+                    noteColor=colors[count];
+
+
+                    count++;
+
+
+
+            }else {
                 MtitleNOte.setBackgroundColor(Color.parseColor(colors[count] ));
                 Mnote.setBackgroundColor(Color.parseColor(colors[count] ));
 
                 mBackground.setBackgroundColor(Color.parseColor(colors[count] ));
 
                 noteColor=colors[count];
+
 
                 count++;
 
@@ -553,6 +619,9 @@ public class NoteActivity extends AppCompatActivity {
             case RESULT_LOAD_IMAGE:
                 if (requestCode == RESULT_LOAD_IMAGE &&
                         resultCode == RESULT_OK && null != data) {
+
+                    imgChange=true;
+                    Toast.makeText(this, "img change", Toast.LENGTH_SHORT).show();
 
                     Uri selectedImage = data.getData();
                     String[] filePathColumn = {MediaStore.Images.Media.DATA};
@@ -629,6 +698,9 @@ public class NoteActivity extends AppCompatActivity {
 
 
     private void activeGallery() {
+
+
+
         Intent intent = new Intent(Intent.ACTION_PICK,
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, RESULT_LOAD_IMAGE);

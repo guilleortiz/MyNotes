@@ -127,7 +127,8 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
             hasPhoto=true;
 
 
-            Toast.makeText(mcontext, "no hay foto", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(mcontext, "no hay foto", Toast.LENGTH_SHORT).show();
+            holder.photoLinearLayout.setVisibility(View.GONE);
 
 
 
@@ -136,7 +137,8 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
 
 
 
-                Toast.makeText(mcontext, "hay foto", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(mcontext, "hay foto", Toast.LENGTH_SHORT).show();
+                holder.photoLinearLayout.setVisibility(View.VISIBLE);
 
         }
 
@@ -169,7 +171,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
         if (noteFav==1){
             holder.notesfav.setVisibility(View.VISIBLE);
         }else {
-            holder.notesfav.setVisibility(View.INVISIBLE);
+            holder.notesfav.setVisibility(View.GONE);
         }
 
         if (noteFoto==null || noteFoto==""){
@@ -201,6 +203,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
 
 
         holder.notestextPreview.setText(shortNote(notePreview));
+
 
 
 
