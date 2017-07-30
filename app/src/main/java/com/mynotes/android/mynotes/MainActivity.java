@@ -66,11 +66,11 @@ public class MainActivity extends AppCompatActivity
 
         int mNoOfColumns = calculateNoOfColumns(getApplicationContext());
 
-        //mLayoutManager=new GridLayoutManager(this,mNoOfColumns);
+        mLayoutManager=new StaggeredGridLayoutManager(mNoOfColumns, StaggeredGridLayoutManager.VERTICAL);
 
        // mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        mRecyclerView.setLayoutManager(mLayoutManager);
 
 
 
