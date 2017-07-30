@@ -1,6 +1,7 @@
 package com.mynotes.android.mynotes;
 
 import android.Manifest;
+import android.annotation.TargetApi;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -8,7 +9,6 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -16,6 +16,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.provider.MediaStore;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ShareCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -86,6 +87,8 @@ public class NoteActivity extends AppCompatActivity {
 
 
 
+    @TargetApi(Build.VERSION_CODES.N)
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -699,14 +702,12 @@ establece solo cuando se elige la img de galeria
 
     private void activeGallery() {
 
-
-
         Intent intent = new Intent(Intent.ACTION_PICK,
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, RESULT_LOAD_IMAGE);
     }
 
-    void handleSendText(Intent intent) {
+    void handleSendText(Intent intent) {//shared from  other aplication to MyNotes
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
@@ -725,18 +726,60 @@ establece solo cuando se elige la img de galeria
         String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
         if (sharedText != null) {
             Mnote.setText(sharedText);
+            Toast.makeText(this, "handleSendText", Toast.LENGTH_SHORT).show();
         }
     }
 
+    //@RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+    @RequiresApi(api = Build.VERSION_CODES.N)
     void handleSendImage(Intent intent) {
-        Uri imageUri = (Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM);
-        Bitmap imgIntent=intent.getParcelableExtra(Intent.EXTRA_STREAM);
+
+
+//ClipData { image/* {U:content://media/external/images/media/44036} }
+
+        picturePath=String.valueOf(intent.getClipData().getItemAt(0).getUri());
+
+
+        //Toast.makeText(this, String.valueOf(String.valueOf(intent.getClipData().getItemAt(0).getUri())), Toast.LENGTH_LONG).show();
+
+
+        Glide.with(this).load(picturePath)
+
+
+                .fitCenter()
+
+                .into(mNoteImg);
+
+        /*Cursor cursor = getContentResolver()
+                .query(selectedImage, filePathColumn, null, null,
+                        null);
+        cursor.moveToFirst();
+
+        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+        String newpicturePath = cursor.getString(columnIndex);
+        cursor.close();
+
+
+
+        Glide.with(this).load(newpicturePath)
+
+
+                .fitCenter()
+
+                .into(mNoteImg);*/
+
+        /*Uri imageUri = (Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM);
+       // Bitmap imgIntent=intent.getParcelableExtra(Intent.EXTRA_STREAM);
+
 
        // Bitmap img= BitmapFactory.decodeStream(imageUri);
+
 
         if (imageUri != null) {
            // Toast.makeText(this, "Imagen", Toast.LENGTH_SHORT).show();
         }
+
+        */
     }
 
     void handleSendMultipleImages(Intent intent) {
