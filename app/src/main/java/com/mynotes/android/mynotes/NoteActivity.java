@@ -119,6 +119,237 @@ public class NoteActivity extends AppCompatActivity {
             //Mnote.setText(savedInstanceState.getString(NOTE_STATE));
         }
 
+        FloatingActionsMenu fab = (FloatingActionsMenu) findViewById(R.id.floatingctionButton);
+
+
+        final View favButton,editButton, savebutton;
+
+
+        favButton=findViewById(R.id.accion_Fav);
+        editButton = findViewById(R.id.accion_edit);
+        savebutton = findViewById(R.id.accion_save);
+
+        fab.bringToFront();
+
+
+
+        favButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+
+                if (noteFavFromExtra==0){//if is note fav the update to fav
+
+
+
+                    ContentValues cv = new ContentValues();
+                    cv.put(NotesContract.COLUMN_FAV,1);
+
+
+                    DataUtils.getInstance(NoteActivity.this).updateNote(cv,noteId);
+
+                    Toast.makeText(NoteActivity.this, "Note add to fav", Toast.LENGTH_SHORT).show();
+
+
+                }else {//update to no fav
+
+                    ContentValues cv = new ContentValues();
+                    cv.put(NotesContract.COLUMN_FAV,0);
+
+                    DataUtils.getInstance(NoteActivity.this).updateNote(cv,noteId);
+
+                    Toast.makeText(NoteActivity.this, "Note delete form fav", Toast.LENGTH_SHORT).show();
+
+
+
+                }
+
+
+
+
+
+
+
+
+
+
+            }
+        });
+
+
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+
+
+                //   Toast.makeText(NoteActivity.this, "edit", Toast.LENGTH_SHORT).show();
+
+                MtitleNOte.setFocusable(true);
+                MtitleNOte.setClickable(true);
+                MtitleNOte.setEnabled(true);
+                MtitleNOte.setFocusableInTouchMode(true);
+
+                Mnote.setFocusable(true);
+                Mnote.setClickable(true);
+                Mnote.setEnabled(true);
+                Mnote.setFocusableInTouchMode(true);
+
+                addImg.setVisible(true);
+                changeColor.setVisible(true);
+
+/*
+*
+* 			BUGS
+-al quitar fav de nota la imagen se pierde
+-al abrir una nota y darle a guardar de nueva la img se pierde porque el path se
+establece solo cuando se elige la img de galeria
+*
+*
+*
+* */
+
+
+
+
+
+                //set focus to note and display keyboard
+                Mnote.requestFocus();
+
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.showSoftInput(Mnote, InputMethodManager.SHOW_IMPLICIT);
+
+
+
+
+            }
+        });
+
+       /* deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+           // DataUtils.getInstance(NoteActivity.this).deleteNote(noteId,NoteActivity.this);
+                mDb.delete(NotesContract.TABLE_NAME,NotesContract._ID+" = "+noteId, null);
+
+                Toast.makeText(NoteActivity.this, "delete", Toast.LENGTH_SHORT).show();
+
+                finish();
+
+
+
+            }
+        });
+        */
+
+        savebutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                if (isNewNote==true){
+
+                    // Toast.makeText(NoteActivity.this, "New note Save", Toast.LENGTH_SHORT).show();
+
+
+                    NotesDbHelper dbHelper = new NotesDbHelper(NoteActivity.this);//create db
+                    mDb = dbHelper.getWritableDatabase();
+
+                    DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                    String date = df.format(Calendar.getInstance().getTime());
+
+                    List<ContentValues> list = new ArrayList<ContentValues>();
+
+
+                    ContentValues cv = new ContentValues();
+                    cv.put(NotesContract.COLUMN_TITLE, MtitleNOte.getText().toString());
+                    cv.put(NotesContract.COLUMN_NOTE, Mnote.getText().toString());
+                    cv.put(NotesContract.COLUMN_DATE, date);
+                    cv.put(NotesContract.COLUMN_IMG, picturePath);
+
+                    //The mask makes sure you only get RRGGBB, and the %06X gives you zero-padded hex (always 6 chars long):
+                    ColorDrawable notecolor=(ColorDrawable) mBackground.getBackground();
+                    int myNoteColor=notecolor.getColor();
+
+
+                    String hexColor = String.format("#%06X", (0xFFFFFF & myNoteColor));
+
+
+                    cv.put(NotesContract.COLUMN_NOTE_COLOR, hexColor);
+                    list.add(cv);
+
+                    //insert all guests in one transaction
+                    try {
+                        mDb.beginTransaction();
+                        //clear the table first
+                        // mDb.delete (NotesContract.TABLE_NAME,null,null);
+                        //go through the list and add one by one
+                        for (ContentValues c : list) {
+                            mDb.insert(NotesContract.TABLE_NAME, null, c);
+                        }
+                        mDb.setTransactionSuccessful();
+
+                    } catch (SQLException e) {
+                        //too bad :(
+                    } finally {
+                        mDb.endTransaction();
+
+
+                        // finish();
+                        Toast.makeText(NoteActivity.this, "Save!", Toast.LENGTH_SHORT).show();
+
+                    }
+
+
+
+
+                }else{//is an existing note, we update it
+
+
+                    ContentValues cv = new ContentValues();
+                    cv.put(NotesContract.COLUMN_TITLE, MtitleNOte.getText().toString());
+                    cv.put(NotesContract.COLUMN_NOTE, Mnote.getText().toString());
+
+                    //The mask makes sure you only get RRGGBB, and the %06X gives you zero-padded hex (always 6 chars long):
+                    ColorDrawable notecolor=(ColorDrawable) mBackground.getBackground();
+                    int myNoteColor=notecolor.getColor();
+
+
+                    String hexColor = String.format("#%06X", (0xFFFFFF & myNoteColor));
+
+
+                    cv.put(NotesContract.COLUMN_NOTE_COLOR, hexColor);
+
+                    if (imgChange==true){
+                        cv.put(NotesContract.COLUMN_IMG, picturePath);
+
+                    }
+
+
+
+                    DataUtils.getInstance(NoteActivity.this).updateNote(cv,noteId);
+
+                    // finish();
+                    Toast.makeText(NoteActivity.this, "Save!", Toast.LENGTH_SHORT).show();
+
+
+                }
+
+
+
+
+
+
+
+
+
+
+            }
+        });
+
 
 
 
@@ -221,6 +452,7 @@ public class NoteActivity extends AppCompatActivity {
                 Mnote.setFocusableInTouchMode(true);
 
 
+
                 //set focus to note and display keyboard
                 MtitleNOte.requestFocus();
 
@@ -229,8 +461,7 @@ public class NoteActivity extends AppCompatActivity {
 
 
                // invalidateOptionsMenu();
-                //addImg.setVisible(true);
-                //changeColor.setVisible(true);
+              // editButton.performClick();
 
 
 
@@ -267,233 +498,7 @@ public class NoteActivity extends AppCompatActivity {
 
 
 
-        FloatingActionsMenu fab = (FloatingActionsMenu) findViewById(R.id.floatingctionButton);
 
-
-        final View favButton,editButton, savebutton;
-
-
-        favButton=findViewById(R.id.accion_Fav);
-        editButton = findViewById(R.id.accion_edit);
-        savebutton = findViewById(R.id.accion_save);
-
-        fab.bringToFront();
-
-
-
-        favButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-
-
-                if (noteFavFromExtra==0){//if is note fav the update to fav
-
-
-
-                    ContentValues cv = new ContentValues();
-                    cv.put(NotesContract.COLUMN_FAV,1);
-
-
-                    DataUtils.getInstance(NoteActivity.this).updateNote(cv,noteId);
-
-                    Toast.makeText(NoteActivity.this, "Note add to fav", Toast.LENGTH_SHORT).show();
-
-
-                }else {//update to no fav
-
-                    ContentValues cv = new ContentValues();
-                    cv.put(NotesContract.COLUMN_FAV,0);
-
-                    DataUtils.getInstance(NoteActivity.this).updateNote(cv,noteId);
-
-                    Toast.makeText(NoteActivity.this, "Note delete form fav", Toast.LENGTH_SHORT).show();
-
-
-
-                }
-
-
-
-
-
-
-
-
-
-
-            }
-        });
-
-
-        editButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-
-
-
-                 //   Toast.makeText(NoteActivity.this, "edit", Toast.LENGTH_SHORT).show();
-
-                MtitleNOte.setFocusable(true);
-                MtitleNOte.setClickable(true);
-                MtitleNOte.setEnabled(true);
-                MtitleNOte.setFocusableInTouchMode(true);
-
-                Mnote.setFocusable(true);
-                Mnote.setClickable(true);
-                Mnote.setEnabled(true);
-                Mnote.setFocusableInTouchMode(true);
-
-                addImg.setVisible(true);
-                changeColor.setVisible(true);
-
-/*
-*
-* 			BUGS
--al quitar fav de nota la imagen se pierde
--al abrir una nota y darle a guardar de nueva la img se pierde porque el path se
-establece solo cuando se elige la img de galeria
-*
-*
-*
-* */
-
-
-
-
-
-                //set focus to note and display keyboard
-                Mnote.requestFocus();
-
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.showSoftInput(Mnote, InputMethodManager.SHOW_IMPLICIT);
-
-
-
-
-            }
-        });
-
-       /* deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-
-           // DataUtils.getInstance(NoteActivity.this).deleteNote(noteId,NoteActivity.this);
-                mDb.delete(NotesContract.TABLE_NAME,NotesContract._ID+" = "+noteId, null);
-
-                Toast.makeText(NoteActivity.this, "delete", Toast.LENGTH_SHORT).show();
-                finish();
-
-
-
-            }
-        });
-        */
-
-        savebutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-
-                if (isNewNote==true){
-
-                   // Toast.makeText(NoteActivity.this, "New note Save", Toast.LENGTH_SHORT).show();
-
-
-                    NotesDbHelper dbHelper = new NotesDbHelper(NoteActivity.this);//create db
-                    mDb = dbHelper.getWritableDatabase();
-
-                    DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-                    String date = df.format(Calendar.getInstance().getTime());
-
-                    List<ContentValues> list = new ArrayList<ContentValues>();
-
-
-                    ContentValues cv = new ContentValues();
-                    cv.put(NotesContract.COLUMN_TITLE, MtitleNOte.getText().toString());
-                    cv.put(NotesContract.COLUMN_NOTE, Mnote.getText().toString());
-                    cv.put(NotesContract.COLUMN_DATE, date);
-                    cv.put(NotesContract.COLUMN_IMG, picturePath);
-
-                    //The mask makes sure you only get RRGGBB, and the %06X gives you zero-padded hex (always 6 chars long):
-                    ColorDrawable notecolor=(ColorDrawable) mBackground.getBackground();
-                    int myNoteColor=notecolor.getColor();
-
-
-                    String hexColor = String.format("#%06X", (0xFFFFFF & myNoteColor));
-
-
-                    cv.put(NotesContract.COLUMN_NOTE_COLOR, hexColor);
-                    list.add(cv);
-
-                    //insert all guests in one transaction
-                    try {
-                        mDb.beginTransaction();
-                        //clear the table first
-                        // mDb.delete (NotesContract.TABLE_NAME,null,null);
-                        //go through the list and add one by one
-                        for (ContentValues c : list) {
-                            mDb.insert(NotesContract.TABLE_NAME, null, c);
-                        }
-                        mDb.setTransactionSuccessful();
-
-                    } catch (SQLException e) {
-                        //too bad :(
-                    } finally {
-                        mDb.endTransaction();
-
-
-                        finish();
-
-                    }
-
-
-
-
-                }else{//is an existing note, we update it
-
-
-                    ContentValues cv = new ContentValues();
-                    cv.put(NotesContract.COLUMN_TITLE, MtitleNOte.getText().toString());
-                    cv.put(NotesContract.COLUMN_NOTE, Mnote.getText().toString());
-
-                    //The mask makes sure you only get RRGGBB, and the %06X gives you zero-padded hex (always 6 chars long):
-                    ColorDrawable notecolor=(ColorDrawable) mBackground.getBackground();
-                    int myNoteColor=notecolor.getColor();
-
-
-                    String hexColor = String.format("#%06X", (0xFFFFFF & myNoteColor));
-
-
-                    cv.put(NotesContract.COLUMN_NOTE_COLOR, hexColor);
-
-                    if (imgChange==true){
-                        cv.put(NotesContract.COLUMN_IMG, picturePath);
-
-                    }
-
-
-
-                   DataUtils.getInstance(NoteActivity.this).updateNote(cv,noteId);
-
-                    finish();
-
-
-                }
-
-
-
-
-
-
-
-
-
-
-            }
-        });
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

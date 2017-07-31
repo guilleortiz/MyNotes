@@ -97,7 +97,7 @@
                         android:layout_width="match_parent"
                         android:paddingStart="4dp"
                         android:layout_height="100dp"
-                        android:paddingTop="4dp"
+                        android:paddingTop="8dp"
                         android:textAlignment="center" />
 
 
@@ -117,7 +117,7 @@
                     android:layout_weight="0"
                     android:paddingBottom="4dp"
                     android:textColor="@android:color/black"
-                    android:paddingTop="4dp" />
+                    android:paddingTop="8dp" />
 
             </LinearLayout>
 

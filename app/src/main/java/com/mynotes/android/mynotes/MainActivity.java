@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity
 
     private NotesAdapter.NoteItemClickListener mOnClickListener;
     private SwipeRefreshLayout mSwipeRefreshLayout;
-    private String orden="date";
+    private String orden="fav";
 
 
     @Override
@@ -235,26 +235,27 @@ public class MainActivity extends AppCompatActivity
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
-        MenuItem searchItem=menu.findItem(R.id.action_search);
-        SearchView searchView=(SearchView) MenuItemCompat.getActionView(searchItem);
+        final MenuItem searchItem=menu.findItem(R.id.action_search);
+        final SearchView searchView=(SearchView) MenuItemCompat.getActionView(searchItem);
 
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
 
-              //  Toast.makeText(MainActivity.this, query, Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "query= "+query, Toast.LENGTH_SHORT).show();
 
-                mAdapter=new NotesAdapter(MainActivity.this,query,MainActivity.this);
-
-                mRecyclerView.setAdapter(mAdapter);
-
+                    mAdapter=new NotesAdapter(MainActivity.this,query,MainActivity.this);
+                    mRecyclerView.setAdapter(mAdapter);
 
                 return false;
             }
 
+
+
             @Override
             public boolean onQueryTextChange(String newText) {
+
                 return false;
             }
 
@@ -272,7 +273,8 @@ public class MainActivity extends AppCompatActivity
 
         int id = item.getItemId();
 
-        if (id== R.id.action_sort){
+       /* if (id== R.id.action_sort){
+
             if(orden=="date"){
                 mAdapter=new NotesAdapter(this,"fav",this);
                 mRecyclerView.setAdapter(mAdapter);
@@ -287,7 +289,7 @@ public class MainActivity extends AppCompatActivity
 
             }
 
-        }
+        }*/
 
         return super.onOptionsItemSelected(item);
     }
