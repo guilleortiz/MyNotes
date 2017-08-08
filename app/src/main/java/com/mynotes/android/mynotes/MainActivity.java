@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity
 
         mAdapter=new NotesAdapter(this,orden, this);
         mRecyclerView.setAdapter(mAdapter);
+        Toast.makeText(this, "mAdapter= "+String.valueOf(mAdapter), Toast.LENGTH_LONG).show();
 
 
 
@@ -242,11 +243,15 @@ public class MainActivity extends AppCompatActivity
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-
-                Toast.makeText(MainActivity.this, "query= "+query, Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "PRECount= "+mAdapter.getItemCount()+" string= "+mAdapter.toString(), Toast.LENGTH_LONG).show();
 
                     mAdapter=new NotesAdapter(MainActivity.this,query,MainActivity.this);
                     mRecyclerView.setAdapter(mAdapter);
+                Toast.makeText(MainActivity.this, "Count= "+mAdapter.getItemCount()+" string= "+mAdapter.toString(), Toast.LENGTH_LONG).show();
+
+                //TODO BUG 1:
+                //adapter tiene data
+                //sera algo del recyclerview que no muestra las notas
 
                 return false;
             }

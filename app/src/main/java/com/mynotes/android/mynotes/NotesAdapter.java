@@ -86,14 +86,6 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
         View view= LayoutInflater.from(mcontext)
                 .inflate(R.layout.note_item_v2,parent,false);
 
-        if(hasPhoto==true){
-
-        }
-
-
-
-
-
 
         return  new ViewHolder(view);
     }
