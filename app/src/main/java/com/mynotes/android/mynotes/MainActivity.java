@@ -68,6 +68,8 @@ public class MainActivity extends AppCompatActivity
 
         mLayoutManager=new StaggeredGridLayoutManager(mNoOfColumns, StaggeredGridLayoutManager.VERTICAL);
 
+
+
        // mRecyclerView.setLayoutManager(mLayoutManager);
 
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -76,7 +78,7 @@ public class MainActivity extends AppCompatActivity
 
         mAdapter=new NotesAdapter(this,orden, this);
         mRecyclerView.setAdapter(mAdapter);
-        Toast.makeText(this, "mAdapter= "+String.valueOf(mAdapter), Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, "mAdapter= "+String.valueOf(mAdapter), Toast.LENGTH_LONG).show();
 
 
 
@@ -86,6 +88,9 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Toast.makeText(MainActivity.this, "layout count = "+mLayoutManager.getItemCount(), Toast.LENGTH_LONG).show();
+                // 08/08/17
                 Context context = MainActivity.this;
                 Class destinationActivity = NoteActivity.class;
 
@@ -152,7 +157,8 @@ public class MainActivity extends AppCompatActivity
             void refreshItems() {
                 // Load items
                 // ...
-                mAdapter.notifyDataSetChanged();
+               // mAdapter.notifyDataSetChanged();
+                setAdapter();
 
                 // Load complete
                 onItemsLoadComplete();
@@ -173,7 +179,8 @@ public class MainActivity extends AppCompatActivity
                 Toast.makeText(MainActivity.this, "refresh", Toast.LENGTH_SHORT).show();
             }
         });
-*/
+        */
+
 
 
 
@@ -221,9 +228,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void setAdapter(){//temporal trick to update the cursor...
-
-
-
 
         mAdapter=new NotesAdapter(this,orden, this);
         mRecyclerView.setAdapter(mAdapter);
@@ -324,7 +328,7 @@ public class MainActivity extends AppCompatActivity
         super.onRestart();
 
         setAdapter();
-        mAdapter.notifyDataSetChanged();
+      //08/08/2017  mAdapter.notifyDataSetChanged();
         //Toast.makeText(this, "restart", Toast.LENGTH_SHORT).show();
     }
 

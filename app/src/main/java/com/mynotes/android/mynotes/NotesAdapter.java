@@ -2,7 +2,8 @@ package com.mynotes.android.mynotes;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.Color;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -94,6 +95,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
 
 
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override//replace with data form dataset
     public void onBindViewHolder(ViewHolder holder, int position) {
 
@@ -148,7 +150,10 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
             noteColor="#ffff75";
         }
 
-        holder.noteCard.setBackgroundColor(Color.parseColor(noteColor));
+        //08/08/17 holder.linearLayout.setBackground(Color.parseColor(5151));
+
+
+        //08/08/17 holder.noteCard.setBackgroundColor(Color.parseColor(noteColor));
 
 
         if (noteFav==1){
@@ -213,6 +218,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
     public class  ViewHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener,View.OnLongClickListener {
 
+        LinearLayout linearLayout;
         CardView noteCard;
         TextView notesTitle;
         TextView notesDate;
@@ -228,6 +234,8 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
         public ViewHolder(View itemView) {
             super(itemView);
 
+
+            linearLayout=(LinearLayout)itemView.findViewById(R.id.linearlayout);
             noteCard=(CardView)itemView.findViewById(R.id.noteCard);
             notesTitle=(TextView) itemView.findViewById(R.id.itemTitle);
             notestextPreview=(TextView) itemView.findViewById(R.id.notePreview);
@@ -240,7 +248,9 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
 
 
             itemView.setOnClickListener(this);
+
         }
+
 
 
 
