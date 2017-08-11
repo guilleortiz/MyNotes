@@ -2,6 +2,7 @@ package com.mynotes.android.mynotes;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v7.widget.CardView;
@@ -150,10 +151,29 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
             noteColor="#ffff75";
         }
 
-        //08/08/17 holder.linearLayout.setBackground(Color.parseColor(5151));
 
+        //11/08/17
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1) {
+            // below lillipop
+            holder.noteCard.setCardBackgroundColor(Color.parseColor(noteColor));
+           // holder.linearLayout.setBackgroundColor(Color.parseColor(noteColor));
+            // working for lower questions as per another answer posted here
+        } else {
+            // lollipop and above
+            holder.noteCard.setBackgroundColor(Color.parseColor(noteColor));
+            // known to be working for lillipop as per your question
+        }
 
-        //08/08/17 holder.noteCard.setBackgroundColor(Color.parseColor(noteColor));
+        /*//08/08/17
+           // holder.linearLayout.setBackgroundColor(Color.parseColor(noteColor));
+
+            //holder.noteCard.setBackgroundColor(Color.parseColor(noteColor));
+
+            //08/08/17
+            //holder.noteCard.setBackgroundColor(Color.parseColor(noteColor));
+            //holder.noteCard.setBackgroundColor(Color.WHITE);
+
+        */
 
 
         if (noteFav==1){
