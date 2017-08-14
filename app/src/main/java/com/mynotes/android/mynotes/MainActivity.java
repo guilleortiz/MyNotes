@@ -18,7 +18,6 @@ import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.mynotes.android.mynotes.data.DataUtils;
 import com.mynotes.android.mynotes.data.NotesContract;
@@ -92,7 +91,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
 
-                Toast.makeText(MainActivity.this, "layout count = "+mLayoutManager.getItemCount(), Toast.LENGTH_LONG).show();
+                //Toast.makeText(MainActivity.this, "layout count = "+mLayoutManager.getItemCount(), Toast.LENGTH_LONG).show();
                 // 08/08/17
                 Context context = MainActivity.this;
                 Class destinationActivity = NoteActivity.class;
@@ -250,15 +249,13 @@ public class MainActivity extends AppCompatActivity
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(MainActivity.this, "PRECount= "+mAdapter.getItemCount()+" string= "+mAdapter.toString(), Toast.LENGTH_LONG).show();
+               // Toast.makeText(MainActivity.this, "PRECount= "+mAdapter.getItemCount()+" string= "+mAdapter.toString(), Toast.LENGTH_LONG).show();
 
                     mAdapter=new NotesAdapter(MainActivity.this,query,MainActivity.this);
                     mRecyclerView.setAdapter(mAdapter);
-                Toast.makeText(MainActivity.this, "Count= "+mAdapter.getItemCount()+" string= "+mAdapter.toString(), Toast.LENGTH_LONG).show();
+               // Toast.makeText(MainActivity.this, "Count= "+mAdapter.getItemCount()+" string= "+mAdapter.toString(), Toast.LENGTH_LONG).show();
 
-                //TODO BUG 1:
-                //adapter tiene data
-                //sera algo del recyclerview que no muestra las notas
+
 
                 return false;
             }
@@ -268,11 +265,20 @@ public class MainActivity extends AppCompatActivity
             @Override
             public boolean onQueryTextChange(String newText) {
 
+                mAdapter=new NotesAdapter(MainActivity.this,orden,MainActivity.this);
+                mRecyclerView.setAdapter(mAdapter);
+
                 return false;
             }
 
 
 
+        });
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                return false;
+            }
         });
 
 

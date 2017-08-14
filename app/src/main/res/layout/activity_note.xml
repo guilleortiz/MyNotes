@@ -72,11 +72,7 @@
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
-    <ScrollView android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+
 
 
 
@@ -111,56 +107,61 @@
                     android:textStyle="normal|bold"
                     android:background="@android:color/transparent" />
 
+            <ScrollView android:layout_width="match_parent"
+                android:id="@+id/ScrollNote"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true">
 
 
 
 
+            <EditText
+                android:layout_weight="1"
+                android:id="@+id/Note"
+                android:inputType="none"
+                android:lines="10"
+                android:overScrollMode="always"
+                android:scrollbarStyle="insideInset"
+                android:scrollbars="vertical"
+
+
+                android:focusable="false"
+                android:clickable="false"
+                android:autoLink="web"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
 
 
 
+                android:hint="Añade tu nota"
+                android:gravity="start"
+                android:background="@color/posit"
+                android:selectAllOnFocus="false"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_margin="8dp">
+
+
+
+            </EditText>
+        </ScrollView>
             <LinearLayout
 
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:id="@+id/Img_Layout">
 
-                <EditText
-                    android:layout_weight="1"
-                    android:id="@+id/Note"
-                    android:inputType="none"
-                    android:lines="10"
-                    android:overScrollMode="always"
-                    android:scrollbarStyle="insideInset"
-                    android:scrollbars="vertical"
-
-
-                    android:focusable="false"
-                    android:clickable="false"
-                    android:autoLink="web"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-
-
-
-                    android:hint="Añade tu nota"
-                    android:gravity="start"
-                    android:background="@color/posit"
-                    android:selectAllOnFocus="false"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_margin="8dp">
-
-
-
-                </EditText>
 
                 <ImageView
                     android:id="@+id/noteImg"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@android:color/background_light" />
+                    android:paddingBottom="8dp" />
 
 
             </LinearLayout>
@@ -169,6 +170,6 @@
         </LinearLayout>
 
 
-    </ScrollView>
+
 
 </RelativeLayout>
