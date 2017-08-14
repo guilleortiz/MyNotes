@@ -9,9 +9,9 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.DisplayMetrics;
@@ -66,13 +66,16 @@ public class MainActivity extends AppCompatActivity
 
         int mNoOfColumns = calculateNoOfColumns(getApplicationContext());
 
-        mLayoutManager=new StaggeredGridLayoutManager(mNoOfColumns, StaggeredGridLayoutManager.VERTICAL);
+        //mLayoutManager=new StaggeredGridLayoutManager(mNoOfColumns, StaggeredGridLayoutManager.VERTICAL);
 
+        mLayoutManager = new GridLayoutManager(this, mNoOfColumns);
 
 
        // mRecyclerView.setLayoutManager(mLayoutManager);
 
         mRecyclerView.setLayoutManager(mLayoutManager);
+
+
 
 
 

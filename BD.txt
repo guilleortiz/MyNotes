@@ -1,0 +1,10 @@
+10	Google		/storage/CDF2-6BE2/DCIM/Camera/IMG_20170724_145840419_HDR.jpg	1	#C7F163	24/07/2017
+11	X28	[24/7 16:43] Guille: Alarma [24/7 16:44] Guille: vende la alarma si se monitorea [24/7 16:44] Guille: X28 [24/7 16:45] Guille: No sale menos de 16000 [24/7 16:45] Guille: Sin monitoreo [24/7 16:46] Guille: -- Cn monitoreo [24/7 16:46] Guille: La deja a 12000 [24/7 16:47] Guille: Mensual [24/7 16:47] Guille: 630 [24/7 16:50] Guille: ------- [24/7 16:50] Guille: Por teléfono [24/7 16:54] Guille: Sale 4000mas de el precio de la alarma		1	#EC95BA	24/07/2017
+12	Acordes		/storage/emulated/0/WhatsApp/Media/WhatsApp Images/IMG-20170725-WA0006.jpg		#FFFF75	25/07/2017
+15	Google Arg	https://youtu.be/6jbuWuydaCM			#FFFF75	26/07/2017
+16	revista papa		/storage/CDF2-6BE2/DCIM/Camera/IMG_20170726_220656712_HDR.jpg		#FFFF75	26/07/2017
+17	Mudanza app	app para registrar las cajas con contenido una vez en la casa indicar estado: - si vaciada -en que parte de la casa esta		1	#C7F163	27/07/2017
+18	BoxApp	https://play.google.com/store/apps/details?id=net.twisterrob.inventory moving organizer https://play.google.com/store/apps/details?id=net.haroon3059.movingmadeeasy	/storage/CDF2-6BE2/DCIM/Camera/IMG_20170730_120802383_HDR.jpg	1	#FFFF75	30/07/2017
+20	Ikea app	https://play.google.com/store/apps/details?id=com.ikea.catalogue.android&hl=es	content://com.android.chrome.FileProvider/images/screenshot/15018617953121259697664.jpg	1	#FFFF75	04/08/2017
+21	ViewBug	https://stackoverflow.com/questions/26703123/using-recyclerview-with-staggeredgridlayoutmanager-not-showing-anything			#C7F163	08/08/2017
+22	bugs	alert de confirmaacion eliminar			#C7F163	09/08/2017
