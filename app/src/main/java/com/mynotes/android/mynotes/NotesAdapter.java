@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.mynotes.android.mynotes.data.DataUtils;
@@ -236,7 +235,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
     }
 
     public class  ViewHolder extends RecyclerView.ViewHolder
-            implements View.OnClickListener,View.OnLongClickListener {
+            implements View.OnClickListener {
 
         LinearLayout linearLayout;
         CardView noteCard;
@@ -296,13 +295,6 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
 
         }
 
-
-        @Override
-        public boolean onLongClick(View view) {
-
-            Toast.makeText(mcontext, "aaaaaaaaa", Toast.LENGTH_SHORT).show();
-            return true;
-        }
     }
 
 

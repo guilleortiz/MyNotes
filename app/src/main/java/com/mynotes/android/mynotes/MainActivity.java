@@ -9,16 +9,22 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.mynotes.android.mynotes.data.DataUtils;
 import com.mynotes.android.mynotes.data.NotesContract;
 import com.mynotes.android.mynotes.data.NotesDbHelper;
@@ -65,9 +71,9 @@ public class MainActivity extends AppCompatActivity
 
         int mNoOfColumns = calculateNoOfColumns(getApplicationContext());
 
-        //mLayoutManager=new StaggeredGridLayoutManager(mNoOfColumns, StaggeredGridLayoutManager.VERTICAL);
+        mLayoutManager=new StaggeredGridLayoutManager(mNoOfColumns, StaggeredGridLayoutManager.VERTICAL);
 
-        mLayoutManager = new GridLayoutManager(this, mNoOfColumns);
+        //mLayoutManager = new GridLayoutManager(this, mNoOfColumns);
 
 
        // mRecyclerView.setLayoutManager(mLayoutManager);
@@ -341,8 +347,32 @@ public class MainActivity extends AppCompatActivity
         //Toast.makeText(this, "restart", Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
 
+        // Write a message to the database
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference();
 
+        myRef.setValue("Hello, World!");
+        // Read from the database
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                String value = dataSnapshot.getValue(String.class);
+                Toast.makeText(MainActivity.this, "Value is: " + value, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Toast.makeText(MainActivity.this, "Failed to read value error= "+ error.toException(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
     @Override
     public void onNoteitemClick(int id, String title) {
@@ -375,6 +405,8 @@ public class MainActivity extends AppCompatActivity
 
 
     }
+
+
 
 
 
