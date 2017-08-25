@@ -26,9 +26,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -53,9 +51,7 @@ public class NoteActivity extends AppCompatActivity {
     @BindView(R.id.Note) EditText Mnote;
     @BindView(R.id.NoteTt) EditText MtitleNOte;
     @BindView(R.id.noteImg)ImageView mNoteImg;
-    @BindView(R.id.Img_Layout)LinearLayout mImgLayout;
     @BindView(R.id.note_back)RelativeLayout mBackground;
-    @BindView(R.id.ScrollNote)ScrollView mScrollNote;
    // @BindView(R.id.action_attach)  MenuView.ItemView mAction_attach;
     //@BindView(R.id.action_color)  MenuView.ItemView mAction_color;
 
@@ -359,13 +355,6 @@ public class NoteActivity extends AppCompatActivity {
 
                 MtitleNOte.setText(titleFromExtra);
                 Mnote.setText(noteTextFromExtra);
-
-                /*if(noteTextFromExtra==null && noteImgPathFromExtra.isEmpty()){
-
-                    mScrollNote.removeAllViews();
-
-                }*/
-
 
                // addImg.setVisible(true);
                 //changeColor.setVisible(true);
