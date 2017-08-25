@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity
         NotesDbHelper dbHelper=new NotesDbHelper(this);//create db
 
         mDb=dbHelper.getWritableDatabase();
+        //
 
 
 
