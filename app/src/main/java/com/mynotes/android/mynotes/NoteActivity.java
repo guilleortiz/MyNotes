@@ -749,7 +749,7 @@ public class NoteActivity extends AppCompatActivity {
         String newpicturePath = cursor.getString(columnIndex);
         cursor.close();
 
-
+//
 
         Glide.with(this).load(newpicturePath)
 
