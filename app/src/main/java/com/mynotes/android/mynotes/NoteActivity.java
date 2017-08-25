@@ -96,12 +96,6 @@ public class NoteActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-
-
-
-
-
-
         Intent intent = getIntent();
         String action = intent.getAction();
         String type = intent.getType();
@@ -203,21 +197,6 @@ public class NoteActivity extends AppCompatActivity {
 
                 addImg.setVisible(true);
                 changeColor.setVisible(true);
-
-/*
-*
-* 			BUGS
--al quitar fav de nota la imagen se pierde
--al abrir una nota y darle a guardar de nueva la img se pierde porque el path se
-establece solo cuando se elige la img de galeria
-*
-*
-*
-* */
-
-
-
-
 
                 //set focus to note and display keyboard
                 Mnote.requestFocus();
@@ -627,6 +606,11 @@ establece solo cuando se elige la img de galeria
         return super.onOptionsItemSelected(item);
     }
 
+
+    /*
+    * img selected from galery
+    *
+    * */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -660,12 +644,7 @@ establece solo cuando se elige la img de galeria
                    dbUpdateImg(mDb,noteId,picturePath,NoteActivity.this);
 
                   //update img
-                    Glide.with(this).load(picturePath)
-
-
-                            .fitCenter()
-
-                            .into(mNoteImg);
+                    Glide.with(this).load(picturePath).into(mNoteImg);
 
 
                 }
@@ -759,12 +738,7 @@ establece solo cuando se elige la img de galeria
         //Toast.makeText(this, String.valueOf(String.valueOf(intent.getClipData().getItemAt(0).getUri())), Toast.LENGTH_LONG).show();
 
 
-        Glide.with(this).load(picturePath)
-
-
-                .fitCenter()
-
-                .into(mNoteImg);
+        Glide.with(this).load(picturePath).into(mNoteImg);
 
         /*Cursor cursor = getContentResolver()
                 .query(selectedImage, filePathColumn, null, null,
