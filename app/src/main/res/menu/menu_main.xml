@@ -6,6 +6,16 @@
 
 
     <item
+        android:id="@+id/action_log"
+        android:icon="@drawable/common_google_signin_btn_icon_dark"
+        android:title="Log in"
+
+        myapp:showAsAction="ifRoom|collapseActionView"
+
+        />
+
+
+    <item
         android:id="@+id/action_search"
         android:title="Search"
         android:icon="@android:drawable/ic_menu_search"
